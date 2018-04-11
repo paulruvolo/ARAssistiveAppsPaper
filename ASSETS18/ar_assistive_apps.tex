@@ -262,6 +262,7 @@ The \emph{Clew} app was developed, refined, and tested in collaboration with a c
 TBD.
 
 \section{ViewShare: Object Finding in Challenging Environments}
+
 Object-finding in unfamiliar environments can be very challenging for people who are \BVI \todo{citation needed}.  Researchers have attempted to build systems that could enable people who are \BVI to more easily find objects whose locations are unknown (either because the location was never known to begin with or because the objects were moved by a third party).  Inspired by previous work \cite{bigham2010vizwizlocateit} that utilized a crowdsourcing model, whereby sighted online volunteers labeled an object of interest and a mobile phone automatically provided sonic cues to guide a user to the object, we developed the \emph{ViewShare} app.
 
 The ViewShare app users the following sequence of steps to provide high precision guidance to objects of interest.  First, the user, who is \BVI, launches the ViewShare app which starts a tracking location tracking session using ARKit.  Once the user is ready to find an object, they announce it, the phone recognizes their voice command using Apple's Siri kit, and a localization job is created.  This localization job is assigned to a number of sighted volunteers who are alerted via push notification on their smartphones.  On the user's device, every two seconds an image is being captured from the users smartphone and added to the localization job.  Once the volunteer clicks on the relevant push notification they see the images collected from the user's smartphone.  If they are able to locate the object of interest, they click on its position in any one of the provided images.  The location (as a 2D pixel coordinates) is relayed back to the user's app, which then attempts to convert this 2D pixel coordinate into a 3D position using the procedures outlined in the sub section below on \emph{2D to 3D Mapping}.  If a 3D location can be determined, the user is then provided with automatic guidance to the object of interest in the form of computer-generated speech and haptic feedback.
@@ -269,8 +270,37 @@ The ViewShare app users the following sequence of steps to provide high precisio
 \subsection{Object Localization Feedback}
 The ViewShare app generates a haptic cue when the phone is oriented towards a located object.  As discussed earlier, the low latency of this mechanism allows the user to sweep the phone around to find objects.  Further, the app can also synthesize speech feedback to the user when their phone is facing an object.  This speech feedback includes both the name of the object along with the distance to the object.  The app can provide feedback in two different modes.  The first mode is 2D position, whereby notions of distance as well as whether or not the phone is oriented towards an object are determined by projecting the 3D positions of the phone and localized objects into the floor plane.  This mode is useful for navigating to objects that are far away (e.g., farther than 10 feet).  The second mode is 3D position, whereby notions of distance as well as whether or not the phone is oriented towards an object are determined by using the unmodified 3D positions and orientations of the phone and localized objects.  This mode is appropriate for finding objects that are close by and are relatively small in terms of their vertical extant.  For example, it might be useful to use 3D mode to find a pen, whereas finding a door would be best approached using 2D.
 
+
+\begin{figure}
+\begin{center}
+\includegraphics[height=3in]{Figures/viewshare_crowdworker}
+\includegraphics[height=3in]{Figures/viewshare_user}
+\end{center}
+\caption{Left image: the ViewShare interface for the crowdworker.  The crowdworker is instructed to locate the stapler in the series of images collected from the \BVI user's phone.  \textbf{Right image:} the interface for the \BVI user.  This interface shows a visualization of the location of the stapler as selected by the crowdworker.  While the visualization is not useful for user's who are blind, it is potentially useful for people who with low vision.  All elements of the interface are accessible via Apple's VoiceOver technology.\label{fig:viewsharescreenshots}}
+\end{figure}
+
+
 \subsection{2D to 3D Mapping}
-In order to map a 2D pixel coordinate to a 3D point in space we utilize ARKit's built-in functionality for plane fitting.  We test the ray corresponding to the 2D pixel coordinate to see if it intersects a 3D plane (as determined by ARKit).  TODO a figure would be good here.  ARKit version 1.5, which we utilize for this study, is capable of finding both vertical and horizontal planes.  If the ray intersects a plane, we mark the object as localized and compute its 3D position using straightforward geometric formulas.  If the ray \emph{does not} intersect a known plane (either because the object located on a plane or because the plane has not been found by ARKit) we return an error condition to the volunteer.  In this situation, the volunteer must click on the object again from a second viewpoint.  Once the 2D pixel coordinate of the object is provided in two views, the ViewShare app uses triangulation to compute the 3D position.
+In order to map a 2D pixel coordinate to a 3D point in space we utilize ARKit's built-in functionality for plane fitting.  We test the ray corresponding to the 2D pixel coordinate to see if it intersects a 3D plane (as determined by ARKit).  TODO a figure would be good here.  ARKit version 1.5, which we utilize for this study, is capable of finding both vertical and horizontal planes.  If the ray intersects a plane, we mark the object as localized and compute its 3D position using straightforward geometric formulas.  If the ray \emph{does not} intersect a known plane (either because the object located on a plane or because the plane has not been found by ARKit) we return an error condition to the volunteer.  In this situation, the volunteer must click on the object again from a second viewpoint.  Once the 2D pixel coordinate of the object is provided in two views, the ViewShare app uses triangulation to compute the 3D position.  The optimal 3D triangulation of two rays with endpoints $x_1$ and $x_2$ and unit directions $u_1$ and $u_2$ is given by the following equation.
+
+\begin{align}
+%c&= x_2 - x_1 \nonumber \\
+%D &= x_1 + u_1 \frac{\left ( u_2 u_2^\top u_1  +  u_1   \right )^\top \left ( x_2 - x_1 \right) } {1 - \left ( u_1^\top u_2 \right)^2} \nonumber \\
+%E &= x_2 + u_2 \frac{ \left ( u_1 u_2^\top u_1 - u_2 \right )^\top  \left ( x_2 - x_1 \right)  }{1 -  \left ( u_1^\top u_2 \right)^2} \nonumber \\
+&\mbox{triangulate}(x_1, u_1, x_2, u_2) \nonumber = \\
+&\frac{x_1 + x_2}{2}  + \frac{ u_1 u_1^\top u_2 u_2^\top  +  u_1 u_1^\top  + u_2 u_1^\top  u_2 u_1^\top - u_2 u_2^\top }{2 \left (1 -  \left ( u_1^\top u_2 \right)^2\right) } \left(  x_2 - x_1\right) \nonumber
+\end{align}
+
+
+%
+%        let A = ray1.origin
+%        let B = ray2.origin
+%        let a = ray1.direction
+%        let b = ray2.direction
+%        let c = B - A
+%        let D = A + a*(-simd_dot(a,b)*simd_dot(b,c)+simd_dot(a,c)*simd_dot(b,b))/(simd_dot(a,a)*simd_dot(b,b) - simd_dot(a,b)*simd_dot(a,b))
+%        let E = B + b*(simd_dot(a,b)*simd_dot(a,c)-simd_dot(b,c)*simd_dot(a,a))/(simd_dot(a,a)*simd_dot(b,b) - simd_dot(a,b)*simd_dot(a,b))
+%        let closestPoint = (D + E)/2
 
 \subsection{Usability Study}
 TBD
@@ -279,21 +309,19 @@ TBD
 While we designed this app primarily for finding objects, it can also potentially be utilized for other tasks.  One major area of opportunity is finding things that are not objects (e.g., the precise location of a bus stop or doorway in outdoor settings where GPS is not sufficiently accurate.  A second major area of opportunity is automatically providing the location of relevant features in the environment (e.g., the locations of doors, windows, chairs) so that the user can make a mental map of the space around them.
 
 \section{Discussion and Future Work}
+
+\subsection{Future Work for the Clew and ViewShare Projects}
+As stated earlier the basic version of the Clew app is already in the app store.  Beyond engaging with users deeply to understand how they experience the current version of the app and improving the usability based on their feedback, there are two major areas of future work we intend to explore.  The first is to improve the ability for the app to detect and communicate tracking failures.  When ARKit throws an error message, it is straightforward to communicate this information to the user, however, if the tracking drifts or becomes inaccurate without entering an error condition the user will be in a much more difficult situation.  In future versions of Clew we would like to be able to detect degraded tracking and alert the user.  A second area of future work would be to enable sharing of previously traveled routes with other Clew users.  This feature could work very similarly to the pause functionality where the user puts their phone in a known starting pose (e.g., against a door as they enter a building) which allows the phone to register its current location with the previously saved route.
+
+For the ViewShare app there are many opportunities for future work.  A big theme to explore is the issue of quality control in crowdsourcing.  Aggregating judgments from multiple crowdworkers is a very active area of research in the machine learning community\todo{need citation} and applying some of these techniques to figure out whom to trust and how to filter out inaccurate localizations from the crowd would be immensely helpful.  A second area for future work is to test different use cases of this app (as mentioned earlier), including finding bus stops, doorways, or businesses in outdoor environments.
+
+\subsection{Opportunities and Challenges in AR Assistive Apps}
+The development of \emph{Clew} and \emph{ViewShare} provide useful information as to the potential of AR-based assistive apps.  The results demonstrate that for object finding --- within a room or on a tabletop --- and navigation along relatively short routes --- $~Xm$ --- the 3D motion estimation abilities of Apple's ARKit are sufficient for good performance.  As the complexity of the environment increase (either because it is larger or has few easily trackable features, which are essential for VIO to function well) other sources of information must be brought to bear on the problem.  For instance, in such cases external landmarks (e.g., signs, such as AprilTags, that are easily detectable in a phone's camera feed or Bluetooth Beacons) could be used to reduce tracking drift and provide anchors in the space.  A second method for adding robustness to AR-based apps would be to employ crowdsourcing to correct drift in the phone's motion estimates.  For example, a crowdworker might select the location of a particular  landmarks in images collected at two points in time so that drift in the system could be reduced.
+
 \begin{enumerate}
-\item Interpretation of the results
-\item Future work for each of the apps
-\begin{enumerate}
-\item New feature development
-\item Robust usability testing
+\item Accessibility to voice over (minor problem, but worth mentioning.  Robust usability testing
 \end{enumerate}
-\item Unresolved Issues
-\item Promises of AR technology
-\item Limitations of AR technology
-\begin{enumerate}
-\item Accuracy
-\item Accessibility to voice over (minor problem, but worth mentioning)
-\end{enumerate}
-\end{enumerate}
+\balance{}
 
 \section{Conclusion}
 We have presented two smartphone apps that each allow people who are B/VI to perform significant, new tasks with their smartphones.  In contrast to the typical use cases of indoor navigation and image process where smartphones have provided significant value for users who are B/VI, our apps provide some of the first apps that can be used for navigation and object finding in arbitrary indoor environments.  While the initial results of our usability test are promising, much more work is required to refine the developed apps to be maximally useful to the B/VI community.
@@ -304,7 +332,6 @@ Further, we have outlined several promising areas of opportunity for the develop
 Removed for anonymous review.
 
 % BALANCE COLUMNS
-\balance{}
 
 \newpage
 % REFERENCES FORMAT
