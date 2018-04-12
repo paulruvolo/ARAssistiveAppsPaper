@@ -181,6 +181,16 @@ Recently, spurred, in part, by the high ownership rates of smartphones among peo
 
 While incredibly useful, GPS-based apps for \OM have a number of shortcomings.  Most notably, GPSes in modern smartphones are only accurate to about $10m$ in ideal conditions (they are even worse in challenging environments such as cities) and do not work indoors.  To circumvent these challenges, researchers have pursued roughly two types of approaches.  The first is to utilize crowdsourcing, whereby people who are \BVI connect over the internet with a sighted person for on-demand assistance.  Examples of this approach include the pioneering VizWiz project \cite{bigham2010vizwiz}), the free BeMyEyes app \cite{bemyeyesaccessworld}, and the subscription-based Aira system \cite{aira} (both BeMyEyes and Aira connect a user who is \BVI with a sighted volunteer through a video chat interface).  The second class of approaches combine rudimentary motion estimates derived from inertial sensors (gyroscopes and accelerometers) with sensing of environmental infrastructure (e.g., Bluetooth-enabled location beacons or Wifi access points) to enable relatively accurate indoor positioning.  For instance, \cite{ganz2015percept, ganz2011percept, ganz2014percept} developed a system for navigating indoor environments using smartphone-detectable RFID tags.  Dias and her collaborators utilized WiFi fingerprinting (calibrated using a highly-precise indoor mapping robot) and dead-reckoning (using the accelerometers and gyroscopes on a standard smartphone) for indoor navigation \cite{Dias__2014_7778}.  A similar system uses low-energy Bluetooth beacons instead of WiFi access points as landmarks \cite{ishihara2017beacon, ahmetovic2016navcog, ahmetovic2017achieving}.  A third approach utilizes a calibrated database containing images at known locations, which are then matched to camera images at run time \cite{bai2014wearable}.\todo{figure out a place to integrate some of Aaron Steinfeld's work}
 
+Some literature to cite:
+\begin{enumerate}
+\item Computer-vision based object recognition and guidance \cite{schauerte2012assistive}
+\item A survey of computer vision based systems for people who are blind \cite{jafri2014computer} (has good motivational material on object-finding)
+\item The last meter (could be a good read) \cite{manduchi2014last}, but not sure if it is really applicable.
+\item another object tracking-based system \cite{thakoor2014system}.
+\item some cool (but not very similar) applications of AR for people who are blind \cite{coughlan2017ar4vi}.
+\item Might be good to cite for a comparison of ARKit and ARCore \url{https://medium.com/super-ventures-blog/how-is-arcore-better-than-arkit-5223e6b3e79d}
+\end{enumerate}
+
 \section{Augmented Reality}
 
 \begin{figure}
