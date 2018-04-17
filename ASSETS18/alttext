@@ -1,0 +1,11 @@
+Steps for accessibility:
+
+Add anonymous author under description (command-d)
+
+Add the following alt tags.
+
+Figure 1:
+A topdown view of a user's path through a building.  The path begins in the lower left corner, proceeds up, turns right, right again, left, and finally right.  The path appears to be navigating through a set of hallways.  The path is marked by dots at evenly spaced intervals.  Some of the dots are filled in, indcating that they have been chosen as waypoints.  Also shown are waypoint checkoff zones.
+
+Figure 2:
+The left image shows a tabletop with many objects strewn about.  Below the image there is text that reads "Stapler."  At the bottom of the image are thumbnail images of snapshots of other parts of the room.  On the right is a view of the same table.  A virtual label that says "stapler" hovers over the actual physical stapler, indicating that the object has been located.  The bottom of the image shows some navigation controls.
