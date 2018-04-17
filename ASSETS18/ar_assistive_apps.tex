@@ -254,36 +254,35 @@ As the user navigates, the app continuously checks to see if the user has reache
 \subsection{Pause feature}
 While an ARKit tracking session is running, the user must not switch to a different app, lock the phone, or occlude the camera.  This can be a hindrance when the user wants to wait a significant amount of time before navigating back, when the user would like to use another app, or when the user needs both of their hands to perform some task.  ARKit does support a pause feature for a tracking session, however, when the session is resumed the phone's position will remain the same as before it was paused.  Given this limitation, we designed a pause feature that prompts the user to place their phone in a position and orientation (collectively called a ``pose'') that is easy to return to when the user wants to resume.  It is not crucial that the user be able to perfectly recreate this pose.  Specifically, the most important aspect of the pose to recreate is its yaw.  The reason for this is that the phone's accelerometer can easily determine the other two degrees of freedom of rotation (as these are not perpendicular to gravity) and deviations in the phone's position cause a fixed amount of error, whereas an error in the phone's yaw will be magnified the farther the user travels.  Holding the phone's screen flat against features such as walls or doors works well for this purpose.  
 
+\subsection{Novelty in Relationship to Previous Work}
+Our work on the design of \emph{Clew} represents the first research into automatically guiding a user back along a route, without the need for special modifications to the environment.
 \subsection{Usability Testing}
 
 \begin{table}
   \centering
-  \begin{tabular}{l r r r r r r}
+  \begin{tabular}{l r r r | r  r}
     % \toprule
-    & \multicolumn{3}{c}{\small{\textbf{Test Conditions}}} &  & \multicolumn{2}{c}{\small{\textbf{Error (m)}}} \\
-    \cmidrule(r){2-4}     \cmidrule(r){6-7}
-    {\small\textit{\#}}
-    & {\small \textit{Length}}
+    {\small \textit{Length}}
       & {\small \textit{Stairs}}
-    & {\small \textit{Vis. Quality}}
+    & {\small \textit{Visuals}}
         & {\small \textit{Success}}
-        & {\small \textit{Mean}} 
-                & {\small \textit{Median}} \\
+        & {\small \textit{Mean Error}} 
+                & {\small \textit{Median Error}} \\
     \midrule
-    1 & 21.3m & no & good & 100\% & 0.15 & 0.15 \\
-    2 & 40.2m & yes & mixed & 100\% & 0.99 & 0.91 \\
-    3 & 11.9m & no & poor & 100\% & 0.91 & 0.61 \\
-    4 & 22.9m & no & good & 100\% & 1.45 & 1.37 \\
-        5 & 47.2m & yes & mixed & 100\%& 1.45 & 1.37 \\
-            6 & 43.4m & yes & good & 75\% & 2.03 & 1.83 \\
+    21.3m & no & good & 100\% & 0.15m & 0.15m \\
+    40.2m & yes & mixed & 100\% & 0.99m & 0.91m \\
+    11.9m & no & poor & 100\% & 0.91m & 0.61m \\
+    22.9m & no & good & 100\% & 1.45m & 1.37m \\
+        47.2m & yes & mixed & 100\%& 1.45m & 1.37m \\
+            43.4m & yes & good & 75\% & 2.03m & 1.83m \\
     % \bottomrule
   \end{tabular}
-  \caption{Usability results for Clew.  \emph{Vis. Quality} indicates the availability of trackable visual features (mixed indicates that a route had both good and poor quality segments).}~\label{tab:clewusability}
+  \caption{Usability results for Clew.  The \emph{Visuals} column indicates the availability of trackable visual features, with ``mixed'' indicating that a route had segments with both good and poor quality visual features.}~\label{tab:clewusability}
 \end{table}
 
 As a preliminary usability test, four college students used Clew to navigate six routes.  For each route, the participant was led by one of the authors --- mimicking the role of a sighted guide --- and then navigated back using Clew.  Participants were instructed to follow the guidance of the app, avoiding the use of their memory to correct for the app's errors.  In order to become accustomed to the app, for the first two routes the participants were sighted for the duration of the trial.  A trial was unsuccessful if the user couldn't follow the app's guidance (e.g., the app's estimation of a waypoint's location was inside a wall due to a failure of the ARKit's tracking algorithm). For successful trials (the user navigated to all waypoints), we recorded the distance from the user's final position to the ground truth position.  A summary of each of the routes and the results are shown in Table~\ref{tab:clewusability}.  These results demonstrate the robustness of Clew for navigating fairly complex routes --- even ones that involve stairs --- and through places with poor visual features.  The current study, while promising, is limited by its use of participants with occluded vision, rather than people who are \BVI.  While our co-designer who is blind tested Clew extensively, we are currently working on a full evaluation of Clew with multiple users who are \BVI.
 
-\subsection{Future Work on the Clew App}
+\subsection{Future Work for Clew}
 Firstly, In order to make \emph{Clew} successful, we must continue to engage deeply with users to understand how they experience the current version of the app and improve it based on their feedback.  Secondly, we are working to improve the ability of the app to detect and communicate tracking failures.  Specifically, when ARKit throws an error, it is straightforward to communicate this information to the user, however, if tracking drifts or becomes inaccurate without throwing an error, detection is much more difficult.  Thirdly, we are working to enable the sharing of previously traveled routes with other users.  This feature will work similarly to the pause feature in that the user will place their phone in a known starting pose (e.g., against a door as they enter a building), allowing their phone to register its current pose with the starting pose of a saved route.
 
 \section{App 2: ViewShare}
@@ -326,11 +325,13 @@ In order to map a 2D pixel coordinate to a 3D point in space, we utilize ARKit's
 %        let E = B + b*(simd_dot(a,b)*simd_dot(a,c)-simd_dot(b,c)*simd_dot(a,a))/(simd_dot(a,a)*simd_dot(b,b) - simd_dot(a,b)*simd_dot(a,b))
 %        let closestPoint = (D + E)/2
 
-\subsection{Future Work on the ViewShare App}
+\subsection{Novelty in Relationship to Previous Work}
+Our work on \emph{ViewShare} represents the first development of an app designed specifically for object finding that leverages the built-in motion sensing capabilities to both localize and provide guidance to objects in 3D.  Previous approaches either use a more brittle, 2D, approach to object localization, or require imprecise, mentally taxing, and high latency verbal communication to relay location information.
+
+\subsection{Future Work for ViewShare}
 While we designed this app primarily for finding objects, it can be utilized for other tasks.  One possibility is finding things that are not objects (e.g., the precise location of a bus stop or a doorway in outdoor settings where GPS is not sufficiently accurate).  A second possibility is automatically providing the location of important features in the environment (e.g., doors, windows, chairs) so that the user can make a mental map of the space around them.  In addition to these new use cases, another area of future exploration is quality control.  Aggregating judgments from multiple workers is an active area of research and these techniques can be utilized to filter inaccurate localizations from the crowd.
 
 \section{Discussion and Future Directions}
-
 
 \subsection{Robustness of AR motion estimates for precise \OM} Our study demonstrates that for navigation routes of $\sim45m$ the motion estimates of ARKit are sufficiently accurate.  Additionally, for object finding within a room or on a tabletop we have found, anecdotally, that ARKit's performance is sufficient.
 
