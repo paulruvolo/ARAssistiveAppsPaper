@@ -1,6 +1,6 @@
 Reviewer #1
 
-We are grateful to Reviewer #1 for the provided references, and as a result, we will soften our claims of the novelty of Clew to clarify that Clew is the first exploration of AR (but not mobile phone technology) for path retracing.  We will provide a discussion of the pros and cons of AR approaches versus step-counting approaches (pros: increased accuracy and robustness, cons: the need to leave the phone's camera unoccluded and the ergonomic challenges that this brings).
+We are grateful to Reviewer #1 for the provided references and, as a result, we will soften our claims of the novelty of Clew to clarify that Clew is the first exploration of AR (but not mobile phone technology) for indoor-route retracing.  We will provide a discussion of the pros and cons of AR approaches versus step-counting approaches for this problem (pros: increased accuracy and robustness, cons: the need to leave the phone's camera unoccluded and the ergonomic challenges that this brings).
 
 Clarifications:
 (1) 23/24 paths were successful.  Average errors were computed over successful trials.
@@ -13,7 +13,7 @@ Point-by-point response:
 
 (2) We will include a brief discussion of some early work in O&M (especially sensor-based obstacle detection and avoidance)
 
-(3-4) Thank you for these references.  In addition to the current grounding in our user-centered design process, we will ground the use cases for the apps in the literature.  We will also cite a greater breadth of research in our related work section on AT.
+(3-4) Thank you for these references.  In addition to the current grounding in our user-centered design process, we will ground the use cases for the apps in this literature.  We will also cite a greater breadth of research in our related work section on AT.
 
 (7) We will add detailed information about the complexity of each route.
 
@@ -27,7 +27,7 @@ Reviewer #3
 
 We are completely in agreement with Reviewer #3 regarding the pitfalls of disability simulations (and the PI is familiar with the literature elucidating these issues).  We will add references pointing out these pitfalls.  In retrospect, we feel that the term "Usability Testing" to describe the study we performed with the blindfolded college students perhaps set the wrong expectations.  The primary insight that can be gained from this study is that AR technology is highly accurate and can be utilized for navigating along arbitrary, complex indoor routes.  This result is not obvious given the use cases that AR was designed for.  Further, our study demonstrated that haptic feedback was intuitive to follow for the college students, which hints at its appropriateness for individuals who are blind (our testing with our co-designer, who is blind, is also consistent with this conclusion).  Due to these contributions, we feel that this evaluation, brings value to the ASSETS proceedings. 
 
-We agree that more testing must be done on Clew and ViewShare.  Further, we agree that the only ironclad validation will be collected from "in the wild" testing by users who are B/VI.  That said, we respectfully disagree with Reviewer #3 that the lack of such testing should disqualify our submission from archival publication.  Our study is framed around investigating the intersection between a well-studied area of AT (O&M for people who are B/VI) and a new mass market technology (AR).  Our study's value derives from providing a proof-of-concept that important O&M challenges (where importance is supported both by the literature and through our user-centered design process) can be addressed with AR technology.  Further, we uncovered a number of important insights through the development of these apps that are relevant to AT reseachers (e.g., the importance of holding the phone in an upright orientation).  We think it is likely that our work will inspire others to explore the usage of AR technology to develop O&M apps and provide important design guidance as they enage in this process.
+We agree that more testing should be done on Clew and ViewShare.  Further, we agree that ironclad validation will be derived from "in the wild" testing by users who are B/VI.  That said, we respectfully disagree that the lack of such testing should disqualify the current submission from archival publication.  Our study is framed around investigating the intersection between a well-studied area of AT (O&M for people who are B/VI) and a new mass market technology (AR).  Our study's value derives from providing a proof-of-concept that important O&M challenges (where importance is supported both by the literature and through our user-centered design process) can be addressed with mass-market AR technology.  Further, we uncovered a number of important insights through the development of these apps that are relevant to AT researchers (e.g., the importance of holding the phone in an upright orientation).  We think it is likely that our work will inspire others to explore the usage of AR technology to develop O&M apps and provide important design guidance as they engage in this process.
 
 General comments:
 
