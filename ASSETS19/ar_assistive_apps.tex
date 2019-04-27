@@ -1,4 +1,4 @@
-\documentclass{sigchi}
+\documentclass[chi_draft]{sigchi}
 
 % Use this section to set the ACM copyright statement (e.g. for
 % preprints).  Consult the conference website for the camera-ready
@@ -77,7 +77,7 @@
 % Paper metadata (use plain text, for PDF inclusion and later
 % re-using, if desired).  Use \emtpyauthor when submitting for review
 % so you remain anonymous.
-\def\plaintitle{Leveraging Augmented Reality to Create Orientation and Mobility Apps for People with Visual Disabilities}
+\def\plaintitle{Leveraging Augmented Reality to Create Apps for People with Visual Disabilities: A Case Study in Indoor Navigation}
 \def\plainauthor{First Author, Second Author, Third Author,
   Fourth Author, Fifth Author, Sixth Author}
 \def\emptyauthor{}
@@ -159,7 +159,7 @@
 \maketitle
 
 \begin{abstract}
-The introduction of augmented reality technology to iOS and Android enables, for the first time, mainstream smartphones to estimate their own motion in 3D space with high accuracy.  For assistive technology researchers, this development presents an enormous opportunity.  In this spirit, we present our work leveraging these technologies to create two smartphone apps to empower people with visual disabilities to more easily perform orientation and mobility tasks.  Our first app provides automatic navigation guidance when backtracking along a route.  Our second app utilizes crowdsourcing to provide automatic guidance to objects of interest.  We present the design of these apps along with a usability study.  Our work expands the capabilities of assistive technology for orientation and mobility that can be distributed cheaply at massive scale.  We conclude by discussing the opportunities, pitfalls, and limitations of augmented reality for creating orientation and mobility apps.
+The introduction of augmented reality technology to iOS and Android enables, for the first time, mainstream smartphones to estimate their own motion in 3D space with high accuracy.  For assistive technology researchers, this development presents an enormous opportunity.  In this spirit, we present our work leveraging these technologies to create a smartphone app to empower people with visual disabilities to more easily navigate indoor environments.  Our app, \emph{Clew}, allows users to use their phones to record routes and then load them, at any time, providing automatic guidance (using haptic, speech, and sound cues) to help the user retrace their steps.  We present our user-centered design process to create the app, the app's system architecture and technical details, as well as both small and large scale usability studies.  Our work expands the capabilities of technology for orientation and mobility that can be distributed cheaply at massive scale.  We conclude by discussing the opportunities, pitfalls, and limitations of augmented reality for creating other orientation and mobility apps.
 \end{abstract}
 
 \category{K.4.2.}{Assistive technology for persons with disabilities}{Orientation and mobility tools for persons with visual disabilities}
@@ -172,17 +172,17 @@ Major exceptions to this disappointing track record are GPS navigation apps for 
 
 While being incredibly useful, GPS apps for \OM have major shortcomings.  Most notably, GPSes in modern smartphones are only accurate to about $5m$ under open sky (and are even worse in challenging environments such as cities) and do not work indoors.  Researchers are working to build systems that overcome these challenges (see \emph{Related Work}).
 
-Recently, smartphone manufacturers have introduced augmented reality modules (AR), which support high accuracy 3D-tracking.  While the primary purpose of these modules is to enable AR applications --- whereby virtual and real content are mingled, e.g., by overlaying virtual characters on a smartphone's camera feed --- these modules have the potential to be repurposed to create assistive technology for \OM that is highly robust, accurate, usable, widely deployable, and free.
+Recently, smartphone manufacturers have introduced augmented reality modules (AR), which support high accuracy 3D-tracking.  While the primary purpose of these modules is to enable AR applications --- whereby virtual and physical content are mingled, e.g., by overlaying virtual characters on a smartphone's camera feed --- these modules have the potential to be repurposed to create assistive technology for \OM that is highly robust, accurate, usable, widely deployable, and free.
 
-With the significant potential of smartphone-based AR technology come critical research questions.  Are the motion estimates provided by AR robust enough to use for \OM, and, if so, which \OM tasks might be facilitated?  In this document we begin to provide answers to these questions.  Specifically, we present our work utilizing user-centered design to leverage the AR modules in modern smartphones to create assistive technologies to aid users who are \BVI with \OM tasks.%  In order to design maximally impactful technologies, we employ user-centered design principles throughout our research and development process.%  Specifically, we worked longitudinally with co-designers who are \BVI and two of the study authors, who are visually impaired themselves, contributed to all aspects of the project and provided design guidance based on their personal experiences.
+With the significant potential of smartphone-based AR technology come critical research questions.  Are the motion estimates provided by AR robust enough to use for \OM, and, if so, which \OM tasks might be facilitated?  What usability challenges does AR technology bring, and how can we, as designers, best support users in using such technology?\todo{add some more research questions.}. In this document we begin to provide answers to these questions.  Specifically, we present our work utilizing user-centered design to leverage the AR modules in modern smartphones to create an application to help people who are \BVI with indoor navigation called \emph{Clew}.  \emph{Clew}, enables users to record a route using their smartphone so that they may navigate it later.  \emph{Clew} is designed to alleviate various pain points experienced by non-visual travelers (e.g., finding one's way independently after being led to a location by a sighted guide or practicing a route in an unfamiliar environment).  Our experiences designing, implementing, and deploying \emph{Clew} provide both quantitative and qualitative information towards answering these research questions.%  In order to design maximally impactful technologies, we employ user-centered design principles throughout our research and development process.%  Specifically, we worked longitudinally with co-designers who are \BVI and two of the study authors, who are visually impaired themselves, contributed to all aspects of the project and provided design guidance based on their personal experiences.
 
-Our first app, \emph{Clew}, enables users to backtrack along previously traveled routes.  \emph{Clew} is designed to alleviate various pain points experienced by non-visual travelers (e.g., finding one's way independently after being led to a location by a sighted guide).  The second app, \emph{ViewShare}, utilizes crowdsourcing to enable a user to find objects in cluttered environments.  In the remainder of the paper we present related work on \OM assistive technology, discuss the algorithms that underlie AR technology on modern smartphones, present the design of \emph{Clew} and \emph{ViewShare}, provide preliminary usability data for \emph{Clew}, and finally conclude with a discussion of future challenges and promising directions for smartphone-based AR technology for people who are \BVI.
+In the remainder of the paper we present related work on \OM assistive technology, discuss the algorithms that underlie AR technology on modern smartphones, present the design of \emph{Clew}, provide small and largescale usability data for \emph{Clew}, and finally conclude with a discussion of future challenges and promising directions for smartphone-based AR technology for people who are \BVI.
 
 \section{Related work}
 
-A number of researchers have worked to overcome the limitations (e.g., less-than-ideal accuracy, lack of availability indoors) of GPS technology for assisting people who are \BVI with \OM.  Researchers have pursued roughly two approaches.  The first is to utilize crowdsourcing, whereby people who are \BVI connect over the internet with a sighted person for realtime assistance.  Examples of this approach include the VizWiz project \cite{bigham2010vizwiz}, BeMyEyes \cite{bemyeyesaccessworld}, and Aira \cite{aira} (both BeMyEyes and Aira support a video chat interface).  A second approach combines rudimentary motion estimates derived from inertial sensors (gyroscopes and accelerometers) with detection of fixed environmental infrastructure (e.g., Bluetooth beacons, Wifi access points).  For instance, \cite{ganz2015percept, ganz2011percept, ganz2014percept} developed a system for navigation using smartphone-detectable RFID tags.  Dias and her collaborators utilized WiFi fingerprinting and dead-reckoning for indoor navigation \cite{Dias__2014_7778}, and similar systems based on Bluetooth beacons have also been developed \cite{ishihara2017beacon, ahmetovic2016navcog}.  Others have explored the use of robots, with sophisticated sensors, to act as guides for people who are blind \cite{Nanavati:2018:CIN:3173386.3176976}.
+A number of researchers have worked to overcome the limitations (e.g., less-than-ideal accuracy, lack of availability indoors) of GPS technology for assisting people who are \BVI with \OM.  Researchers have pursued roughly two approaches.  The first is to utilize crowdsourcing, whereby people who are \BVI connect over the internet with a sighted person for realtime assistance.  Examples of this approach include the VizWiz project \cite{bigham2010vizwiz}, BeMyEyes \cite{bemyeyesaccessworld}, and Aira \cite{aira} (both BeMyEyes and Aira support a video chat interface).  A second approach combines rudimentary motion estimates derived from inertial sensors (gyroscopes and accelerometers) with detection of fixed environmental infrastructure (e.g., Bluetooth beacons, Wifi access points).  For instance, \cite{ganz2015percept, ganz2011percept, ganz2014percept} developed a system for navigation using smartphone-detectable RFID tags.  Dias and her collaborators utilized WiFi fingerprinting and dead-reckoning for indoor navigation \cite{Dias__2014_7778}, and similar systems based on Bluetooth beacons have also been developed \cite{ishihara2017beacon, ahmetovic2016navcog}.  Others have explored the use of robots, with sophisticated sensors, to act as guides for people who are blind \cite{Nanavati:2018:CIN:3173386.3176976}.\todo{Generally need to expand on this given that we are not trying to hit the 5-page limit.  I think the list of sources is fine, it just needs to be explained in more detail}
 
-Another area of research is the development of solutions to help people who are \BVI find objects that were misplaced, moved by a third party, or whose locations were never known.  While the task of object finding doesn't fall under the umbrella of \OM, here we stretch the terminology to encompass it by noting that both \OM and object finding require a significant degree of spatial awareness.  As in the case of navigation, crowdsourcing approaches have shown promise for object finding \cite{bigham2010vizwizlocateit}.  Other approaches use automatic object detection and tracking to navigate to objects \cite{schauerte2012assistive, jafri2014computer, thakoor2014system}.%\todo{might need to explicitly contrast with our work, why is ours better, or just say that we will discuss this later}
+%Another area of research is the development of solutions to help people who are \BVI find objects that were misplaced, moved by a third party, or whose locations were never known.  While the task of object finding doesn't fall under the umbrella of \OM, here we stretch the terminology to encompass it by noting that both \OM and object finding require a significant degree of spatial awareness.  As in the case of navigation, crowdsourcing approaches have shown promise for object finding \cite{bigham2010vizwizlocateit}.  Other approaches use automatic object detection and tracking to navigate to objects \cite{schauerte2012assistive, jafri2014computer, thakoor2014system}.%\todo{might need to explicitly contrast with our work, why is ours better, or just say that we will discuss this later}
 
 \section{Augmented Reality}
 %
@@ -195,69 +195,119 @@ Another area of research is the development of solutions to help people who are 
 
 Recently, both Apple and Google have released support for highly sophisticated smartphone-based AR experiences, whereby virtual and real content are combined.  For instance, an app might show a virtual cat projected into a real world scene.  As the user moves, the phone senses the user's motion and renders the cat at an appropriate distance and angle, providing the illusion that the cat exists in the physical world.
 
-These AR systems utilize 3D motion-processing algorithms that are vastly more accurate than the inertial-based systems in previous \OM apps.  The high accuracy of these systems is driven by two key trends: the development of sophisticated algorithms for visual-inertial odometry (VIO) \cite{li2013high,leutenegger2015keyframe,bloesch2015robust,forster2014svo} (which combine optical tracking with inertial sensing to perform motion estimation) and the development of special purpose hardware that allows these computationally intensive algorithms to run with minimal heat generation and power consumption.  It is the combination of high accuracy and low power consumption that has the potential to unlock many new potential \OM apps for people who are \BVI.
+These AR systems utilize 3D motion-tracking algorithms that, combine data from inertial sensors (gyroscopes and accelerometers) with visual information (obtained from the phone's camera), to generate motion estimates that are far more accurate than what could be obtained using only inertial sensing.  The high accuracy of these systems is driven by two key trends: the development of sophisticated algorithms for visual-inertial odometry (VIO) \cite{li2013high,leutenegger2015keyframe,bloesch2015robust,forster2014svo} (which are the algorithms that enable the combination of optical and inertial data for motion estimation) and the development of special purpose hardware that allows these computationally intensive algorithms to run with minimal heat generation and power consumption.  It is the combination of high accuracy and low power consumption that provides the motivation for the exploration of the potential of this technology for creating \OM apps for people who are \BVI.
 
 \subsection{Algorithms for Visual Inertial Odometry}
 While a full explanation of VIO \cite{gui2015review} is beyond the scope of this paper, it helps to have a conceptual understanding of VIO.  VIO algorithms are designed for either the monocular (single camera) or stereo setting.  Since the monocular setting is the one applicable to mass-market smartphones, here we use the term VIO to refer to monocular VIO specifically.
 
 VIO algorithms utilize sensor fusion to blend optical and inertial motion estimates.  Optical motion estimates are made by tracking salient visual features --- e.g., corners or other highly textured portions of an image --- through multiple video frames.  Utilizing the mathematics of perspective geometry, one can estimate the rotation and translation of the phone \cite{Hartley2004}.  Importantly, the accuracy of these estimates is dependent on tracking a large number of visual features that should, ideally, correspond to points at a range of depths from the camera.%  While some environments are intrinsically more difficult for optical tracking, we have observed that users may exacerbate this difficulty by holding their phones in a suboptimal orientation (e.g., with the camera facing the ground).
 
-Further complicating matters, the translation estimated using optical tracking is only determined up to an arbitrary scale factor.  This indeterminacy arises due to the fact that the depths of the tracked visual features are unknown \cite{Hartley2004}.  For example, given an estimate of the translation of the phone, it is possible that the phone moved twice as far and the depths of the tracked points were twice as great.  The shortcomings of optical tracking, scale-indeterminacy and inaccurate performance in feature-poor environments, can be overcome by the fusion of inertial data (gyroscopes and accelerometers).  Gyroscopes, which provide accurate estimates of angular velocity, can refine estimates of rotation while accelerometer data can be integrated over time to obtain estimates of linear velocity, overcoming the scale-indeterminacy problem.%  Since inertial sensors don't function optimally when subjected to fast rotations or high accelerations, users should hold their phones relatively stable for maximum accuracy.
+Further complicating matters, the translation estimated using optical tracking is only determined up to an arbitrary scale factor.  This indeterminacy arises due to the fact that the depths of the tracked visual features are unknown \cite{Hartley2004}.  For example, given an estimate of the translation of the phone, it is possible that the phone moved twice as far and the depths of the tracked points were twice as great.  The shortcomings of optical tracking, scale-indeterminacy and inaccurate performance in feature-poor environments, can be overcome by the fusion of inertial measurements from gyroscopes and accelerometers.  Gyroscopes, which provide accurate estimates of angular velocity, can refine estimates of rotation while accelerometer data can be integrated over time to obtain estimates of linear velocity, overcoming the scale-indeterminacy problem.
 
 \subsection{VIO in Mass-Market Smartphones}
 Both Apple and Google have released AR modules based on VIO.  While, the details of their VIO algorithms are not publicly available, there are distinctions between these frameworks that researchers should keep in mind.
 
 \subsubsection{Google Tango}
-Release in late 2014 by Google's ATAP (Advanced Technology and Projects) division, the Tango utilizes a wide-angle lens and a global image shutter to enable accurate visual-feature tracking.  The platform also includes a PrimeSense depth-sensing camera.  Two commercial smartphones have been released based on the Tango platform: the Lenovo Phab2 Pro and the Asus Zenfone AR.  While the tracking capabilities of Tango devices are superior to both ARKit and ARCore (discussed next), the reliance on special-purpose hardware has severely limited the adoption of the technology.  As a result, Google suspended the project in early 2018 \cite{tangoretired}.
+Release in late 2014 by Google's ATAP (Advanced Technology and Projects) division, the Tango utilizes a wide-angle lens and a global image shutter to enable accurate visual-feature tracking.  The platform also includes a PrimeSense depth-sensing camera.  Two commercial smartphones have been released based on the Tango platform: the Lenovo Phab2 Pro and the Asus Zenfone AR.  While the tracking capabilities of Tango devices are superior to both ARKit and ARCore (discussed next), the reliance on special-purpose hardware severely limited the adoption of the technology.  As a result, Google suspended the project in early 2018 \cite{tangoretired}.
 
 
 \subsubsection{ARKit and ARCore}
-
-Apple's ARKit \cite{arkit} and Google's ARCore \cite{arcore}, both released in 2017, do not require special purpose hardware.  Since these platforms utilize conventional cameras, the richness of visual features available for tracking is not as great as with Tango, and consequently, their motion estimates are less accurate.  Further, since neither of these platforms have depth sensing cameras, the availability of 3D information is limited to objects with special structure (e.g., planar horizontal and vertical surfaces).  Despite their drawbacks, these frameworks can run on a wider share of phones than Google Tango, however, given the large preference for iOS among people who are \BVI \cite{morris2014blind}, ARKit is the primary platform of interest for researchers seeking to develop \OM apps for people who are \BVI.
+\begin{figure*}
+\includegraphics[width=\linewidth]{Figures/designprocess}
+\caption{Our design process used to investigate the usage of AR technology for creating assistive technologies for people who are \BVI.  We are using this process to design our app \emph{Clew}.\label{fig:designprocess}}
+\end{figure*}
+Apple's ARKit \cite{arkit}, released in 2017, and Google's ARCore \cite{arcore}, released in 2018, do not require special purpose hardware.  Since these platforms utilize conventional cameras, which have comparatively limited field-of-view when compared to a fisheye camera, the richness of visual features available for tracking is not as great as with Tango, and consequently, their motion estimates are less accurate.  Further, since neither of these platforms have depth sensing cameras, the availability of 3D information is limited to objects with special structure (e.g., planar horizontal and vertical surfaces).  Despite their drawbacks, these frameworks can run on a wider array of phones than Google Tango; however, given the large preference for iOS among people who are \BVI \cite{morris2014blind}, ARKit is the primary platform of interest for researchers seeking to develop \OM apps for people who are \BVI.
 
 %Although quite specific and certainly at the implementation detail level, a challenge presented when developing assistive apps for ARKit is that the ARSCNView class provided by Apple does not allow for the presentation of subviews.  This limitation makes it particular hard to achieve optimal integration with Apple's VoiceOver.  In particular, it is very difficult to make an app that consistently announces the identity of activated buttons, while also properly announcing new controls that appears on the screen.
 
-\section{Design Process and Insights}
-We employed semi-structured interviews, participatory design approaches \cite{buhler2001empowered, schuler1993participatory}, and digital prototype testing over a period of a month with members of the \BVI community.  We engaged deeply with one co-designer named Joe (name changed for anonymous review), a college student who has no functional vision due to Retinitis Pigmentosa (a degenerative vision disorder that leads to the breakdown of cells in the retina); he is a non-visual traveler, mostly navigating with the help of his guide dog. We also learned from an \OM trainer for primary and middle school students who shared stories drawn from his own experiences. Furthermore, two members of our research team, who are themselves visually impaired, contributed both to the design and implementation of the apps and leveraged their personal experiences and knowledge of the \BVI community to inform our design process. Our research team identified a number of pain points and accessibility barriers through involving people who work with or identify as \BVI people throughout aspects of our design and evaluation.
+\section{Design Process Overview}
 
-\textbf{Navigating newly traveled routes towards previously visited locations was difficult.} Joe expressed that finding his seat (e.g., in a classroom) after going to the restroom was challenging, particularly when traveling without his dog. This story resonated for one of our visually impaired team members who found it difficult to find his seat on a dimly lit airplane while returning from the restroom. These insights motivated the creation of our app \emph{Clew} to support precise indoor navigation for finding the way back in unfamiliar environments.
+In order to best understand how AR technology could be used to create assistive technologies for people who are \BVI, we employed a user-centered design methodology.  The steps of our methodology are summarized in Figure~\ref{fig:designprocess}.  Our design process begins with in-person interactions with local members of the \BVI community to explore in-depth what might be built to improve access to physical spaces (see Section~\ref{sec:areasofopportunity}).  Based on these initial interactions we came up with concepts for \OM apps that we fed into an intensive co-design process where we created system designs, selected and developed algorithms, and ultimately produced prototype apps, which our co-designers evaluated (see Section~\ref{sec:areasofopportunity}).  Based on these co-design sessions, we generated suggestions for making these prototypes better.
 
-\textbf{Finding objects in unfamiliar environments was difficult.} While Joe mentioned he had no difficulty in finding objects in spaces he has control to organize himself, he admitted that locating objects of interest in unfamiliar places or when others disturb his organization can be very challenging. Additionally, finding precise locations in outdoor environments (e.g., the correct part of a train platform or button to activate a crosswalk) is very difficult.  This set of insights helped support the creation of our app \emph{ViewShare} for object finding.
+Once we had generated an app that we felt was useful to the \BVI community, we released the app on the iOS App Store.  The release of the app generated feedback in two forms.  First, users from all over the world gave us their impressions of the app and how they would want to see it improved.  Second, users who opted-in to sharing usage data, provided us with a rich dataset to understand in a quantitative manner how the app was being utilized and what its limitations are (see Section~TODO for a discussion of this analysis).
 
-Over the course of our multi-week co-design with Joe, he tried various prototypes as a means to explore potential concepts for assistive apps.  Based on his feedback, we developed a mostly complete version of \emph{Clew}, which he was able to test and help us to improve.  While informed by his insights, Joe did not test \emph{ViewShare} as it was developed after he had returned to college.
+\subsection{User Interviews, Identification of Areas of Opportunity}\label{sec:areasofopportunity}
+We employed semi-structured interviews and participatory design approaches \cite{buhler2001empowered, schuler1993participatory} with members of the local \BVI community.  We engaged deeply with one co-designer named Joe (pseudonym)\todo{maybe list all four co-designers here}, a college student who has no functional vision due to Retinitis Pigmentosa (a degenerative vision disorder that leads to the breakdown of cells in the retina); he is a non-visual traveler, mostly navigating with the help of his guide dog. We also learned from an \OM trainer for primary and middle school students who shared stories drawn from his own experiences. Furthermore, three members of our research team, two of whom are low-vision and the other of whom is completely blind, contributed both to the design and implementation of the apps and leveraged their personal experiences and knowledge of the \BVI community to inform our design process. Our research team identified a number of pain points and accessibility barriers through involving people who work with or identify as \BVI people throughout aspects of our design and evaluation.
 
-\section{App 1: Clew}
+\textbf{Navigating in unfamiliar indoor environments is difficult.} Joe expressed that navigating in buildings that he has never visited is an especially difficult task.  In these situations Joe will often need to either call a sighted person to assist him once he arrives at the building or bring along a sighted friend or familiar member to help him find his way.  If he will be navigating this environment over a long period of time, for instance if he is starting a new job, then he will often work with a mobility instructor in order to learn how to effectively get around in this new environment.  He identified his need to rely on others for assistance in these scenarios as a major impediment to independence.
 
+\textbf{Navigating newly traveled routes towards previously visited locations is difficult.} A specific subset of the difficulties encountered in navigating new indoor environments is navigating back to a starting point after traveling to a new location.  As an example, Joe expressed that finding his seat (e.g., in a classroom) after going to the restroom was challenging, particularly when traveling without his dog. This story resonated for one of our visually impaired team members who found it difficult to find his seat on a dimly lit airplane while returning from the restroom.
 
-\begin{figure}
+The identification of these two pain points motivated the creation of our app \emph{Clew} to support precise indoor navigation in unfamiliar environments.  In Section~\ref{sec:clewoverview}\todo{we don't have section numbers, so we can't put in section references like this.... not sure what to do}, we present the apps major features and general technical architecture.  In Section~TODO, we present both small and large-scale user studies that provide insight into the apps capabilities and provide hints at how to improve its design.
+
+\section{Clew App Overview}\label{sec:clewoverview}
+
+\begin{figure*}
 \begin{center}
 \includegraphics[width=\linewidth]{Figures/samplepath}
 \end{center}
 \caption{A topdown view of a path generated by the \emph{Clew}.  The figure shows the raw path (solid line) and breadcrumbs (white circles with black outlines).  The Ramer-Douglas-Peucker reduces the breadcrumbs to a more manageable number of waypoints (solid black circles).  The resultant path consists of straight lines connecting these waypoints in reverse order.  Waypoint checkoff zones are shown as dashed boxes).\label{fig:samplepath}}
+\end{figure*}
+
+We present \emph{Clew}, an iPhone app based on ARKit (link to Clew on the app store redacted for anonymous review).  Clew provides turn-by-turn directions to guide users who are \BVI along previously traveled routes.  The app has two major functions.
+
+The first major function is that the user can record a path through an indoor environment and then navigate the path back to the starting location when they are ready to return.  This functionality arises from two primary use cases.  First, when a user is led somewhere by a sighted guide, they may wish to return to their previous location at a later time --- without wanting to be guided back.  Secondly, sometimes it is easier for someone who is \BVI to navigate from a location than back to it.  For instance, it is easier for someone who is \BVI to leave a conference room than it is to find their way back to their particular seat.
+
+The second major function is that the user can record a path through an indoor environment, save this path, and then navigate the path either in the forward or reverse direction at a later point in time.  This function is useful when a user is either learning to navigate a new route and could use guidance in when practicing the route or when the user finds themselves in a situation when they will be navigating a new route repeatedly for a brief period of time (e.g., during a hotel stay a user may want to be able to navigate to their room or the hotel pool).
+
+In order to realize each of these functions, \emph{Clew} provides high-accuracy, easy-to-follow, navigational guidance to enable people who are \BVI to travel independently indoors, without the need for modifications to the environment (e.g., the introduction of beacons or special signage).  
+
+\subsection{Path Recording}
+
+In path recording mode, the app creates a trail of virtual breadcrumbs (representing timestamped 3D positions and orientations).  The estimates of position and orientation are generated by Apple's ARKit library, which provides these at a rate of roughly 60 Hz, which, as described earlier, are based on fusing visual and inertial measurements.  In the path recording mode we sample the phone's position every $300$ milliseconds in order to have a fairly granular picture of the recorded route without maintaining too much data.
+
+In our \emph{technology evaluation and algorithm development} phase (see Figure~\ref{fig:designprocess}), we discovered that the motion tracking estimates of the ARKit are most accurate when the user user holds their smartphone with the screen facing towards them and the camera facing roughly parallel to the ground.  This anecdotal finding is supported by the underlying VIO algorithms, whose underlying geometrical calculations are best conditioned when visual features are tracked at a range of depths from the camera.  If the user's phone is pointed down at the floor or to the side at a wall, the phone will track features that primarily lie on a single plane, which will result in a less reliable estimates of camera motion.
+
+Once the user starts path recording, they travels to a new location (either via their traditional \OM process or via assistance from a sighted guide) and stops the recording.  Figure~\ref{fig:samplepath} shows a sample path along with virtual breadcrumbs.
+%
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.48\linewidth]{Figures/clew_screenshot_1}\hspace{.01\linewidth}
+\includegraphics[width=0.48\linewidth]{Figures/clew_screenshot_2}
+\end{center}
+\caption{Two screenshots from our app ``Clew'' in navigation mode (where a user is retracing a previously traveled route).  The text for the left image says ``Continue straight and proceed downstairs'' and the text on the right says ``Continue straight for 3.2 feet.''\label{fig:clewshots}}
 \end{figure}
 
-We present \emph{Clew}, an iPhone app based on ARKit (link to Clew on the app store redacted).  Clew provides turn-by-turn directions to guide users who are \BVI along previously traveled routes.  The app has two primary use cases.  First, when a user is led somewhere by a sighted guide, they may wish to return to their previous location at a later time --- without wanting to be guided back.  Secondly, sometimes it is easier for someone who is \BVI to navigate from a location than back to it.  For instance, it is easier for someone who is \BVI to leave a conference room than it is to find their way back to their particular seat.  For both of these uses cases, \emph{Clew} provides high-accuracy, easy-to-follow, navigational guidance to enable people who are \BVI to travel independently indoors, without the need for modifications to the environment (e.g., the introduction of beacons or special signage).  
 
-Clew works by dropping a trail of virtual breadcrumbs (representing timestamped 3D positions), which can be followed in reverse order at a later time.  The phase of laying down these breadcrumbs is called \emph{path recording} mode.  In \emph{path recording} mode, the user holds their smartphone with the screen facing towards them and the camera facing roughly parallel to the ground.  The user then travels to a new location (either via their traditional \OM process or via assistance from a sighted guide) and stops the recording.  Figure~\ref{fig:samplepath} shows a sample path along with virtual breadcrumbs.%  A virtual breadcrumb (shown as a white circle with a black outline) is dropped at a fixed time interval.
-%
-%\begin{figure}
-%\begin{center}
-%\includegraphics[width=0.48\linewidth]{Figures/clew_screenshot_1}\hspace{.01\linewidth}
-%\includegraphics[width=0.48\linewidth]{Figures/clew_screenshot_2}
-%\end{center}
-%\caption{Two screenshots from our app ``Clew'' in navigation mode (where a user is retracing a previously traveled route).  The text for the left image says ``Continue straight and proceed downstairs'' and the text on the right says ``Continue straight for 3.2 feet.''\label{fig:clewshots}}
-%\end{figure}
+\subsection{Route Pausing and Saving through Landmark Creation}
 
-When the user has recorded their path, they can either pause (described later) or navigate back along their route.  When navigating back, the trail of breadcrumbs is processed by the Douglas-Ramer-Peucker (DPR) algorithm \cite{douglas1973algorithms} for path simplification.  This algorithm winnows down the path by removing sequences of breadcrumbs that are well represented by a straight line.  Figure~\ref{fig:samplepath} shows the breadcrumbs selected by the DPR algorithm, called \emph{waypoints}, and the resultant piecewise straight navigation route obtained by connecting the waypoints.  In \emph{navigation mode}, the app synthesizes directions to the next waypoint using one of three mechanisms: (1) speech (e.g., ``continue straight for 10 feet''), (2) haptic or (3) audible feedback when the phone is pointing towards the next waypoint.  When using (2) or (3), the low latency of the update of the phone's position allows the user to sweep their phone back and forth until they sense a haptic or auditory cue, providing an accurate sense of the direction to the next waypoint.
+ARKit tracks motion in a coordinate frame whose origin is initialized based on the device's position when the app was started.  This means that the positions of any breadcrumbs dropped during the path recording phase are only meaningful \emph{within} the context of the current ARKit tracking session.  If the user doesn't switch to a different app, lock the phone, or occlude the camera then they can navigate back to their starting location using the procedures described in the \emph{Path Navigation} section.  However, if the user wishes to wait a significant amount of time before navigating back, would like to use another app, when the user needs both of their hands to perform some task, or if the user would like to save the route for use at a later time these limitations can be prohibitive.  In order to support such cases, Clew provides support for route pausing and saving.
+
+\subsubsection{Visual Alignment}
+With the release of iOS 12.0, Apple's ARKit supports a re-localization feature whereby a visual representation of landmarks and their associated 3D positions can be stored to form a sparse map of the user's path during an ARKit session.  Given that a new ARKit session is now running (e.g., the user has restarted the app), ARKit can load the previous 3D map and attempt to match the phone's current image features to those stored in the map.  If a match is found, the current position and orientation of the phone will be updated so that they are relative to the coordinate system in the 3D map.  In order to support route saving and pausing, \emph{Clew} will save the current 3D map of the tracking session and attempt to use visual matching to relocalize the user into the saved map when the user wants to navigate the route at a later time.
+
+The principal limitation of the visual alignment process is that it doesn't always succeed.  Sometimes the user's environment will not be able to be physically matched to the saved 3D map.  This can occur for a multitude of reasons.  First, if the environment has changed significantly, for instance when lighting conditions have changed drastically, the visual environment may not look similar enough to the saved 3D map.  A second reason why matching might not succeed is when the user's viewing angle on the environment is significantly different than in the saved map.  This is particularly likely to happen when navigating routes in the reverse direction as visual features in the environment are often difficult to match viewed from the opposite direction.
+
+
+\subsubsection{Physical Alignment through Landmarks}
+
+In order to allow users to reload or pause routes even when visual alignment fails, Clew supports physical alignment through landmarks.  Clew provides a landmark creation feature whereby the user can place their phone in a position and orientation (collectively called a ``pose'') that is easy to return to when the user wants to resume or reload the route.  It is not crucial that the user be able to perfectly recreate this pose.  Specifically, the most important aspect of the pose to recreate is its yaw.  The reason for this is that the phone's accelerometer can determine the other two degrees of freedom of rotation, pitch and roll, as these are not perpendicular to gravity and deviations in the phone's position contribute a fixed amount of error, whereas an error in the phone's yaw will be magnified over long routes.
+
+The suggested procedure for landmark creation is for the user to place their phone's top (short-edge) flush against a flat vertical surface (such as a door or wall).  In this configuration the user's camera will be facing down, which will allow it to track visual features on the floor, and the screen will be facing up, which allows the user to see what's on the screen (if they have usable vision) or interact with the screen using VoiceOver.  In order to make this alignment process more robust, we artificially ``level'' the phone by undoing the effects of the phone's roll and pitch to create a virtual landmark pose where the phone is perfectly flat.  Further, Clew allows the user to enter text or record a voice message to help them remember the details of how they positioned their phone when creating the landmark (e.g., ``Office front door, right above the handle'').
+
+We tested several other physical configurations for landmark creation (e.g., with the screen flat against the wall) and we found that this mode was both easy for the user to perform and accurate in terms of its ability to align to paused or saved routes.
+
+\subsubsection{Requirements for Landmark Creation}
+
+In order to load a route and navigate it at a later time or to pause a route so the user can switch to another app or lock their phone, they must create a route landmark.  While in theory we could support visual alignment-only, we chose not to allow this as an option since it isn't guaranteed to succeed in relocalizing.  When reloading a route, the user can choose to navigate the route in either the forward or reverse direction in comparison to the direction it was originally recorded.  In order to navigate in a particular direction, the user must have created a landmark at either the beginning of the route (if navigating int he forward direction) or at the end of the route (if navigating in the reverse direction).
+
+\subsection{Path Navigation Mode}
+
+When the user is ready to navigate using the app, the trail of breadcrumbs is processed by the Douglas-Ramer-Peucker (DPR) algorithm \cite{douglas1973algorithms} for path simplification.  This algorithm winnows down the path by removing sequences of breadcrumbs that are well represented by a straight line.  Figure~\ref{fig:samplepath} shows the breadcrumbs selected by the DPR algorithm, called \emph{waypoints}, and the resultant piecewise straight navigation route obtained by connecting the waypoints.  In \emph{navigation mode}, the app synthesizes directions to the next waypoint using one of three mechanisms: (1) speech (e.g., ``continue straight for 10 feet''), (2) haptic or (3) audible feedback when the phone is pointing towards the next waypoint.  When using (2) or (3), the low latency of the update of the phone's position allows the user to sweep their phone back and forth until they sense a haptic or auditory cue, providing an accurate sense of the direction to the next waypoint.
 
 As the user navigates, the app continuously checks to see if the user has reached the next waypoint.  We define the condition of ``reached the next waypoint'' as the user entering a \emph{waypoint checkoff zone} (see Figure~\ref{fig:samplepath}).  Instead of making these checkoff zones spherical, we made them rectangular prisms with sides perpendicular to the direction of travel longer than for dimensions parallel to the direction of travel.  This choice of shape enables the user to deviate laterally from the intended path without missing a waypoint.  The app also announces flights of stairs by detecting if the vertical angle of the segment connecting two waypoints exceeds a threshold.
 
-\subsection{Pause feature}
-While an ARKit tracking session is running, the user must not switch to a different app, lock the phone, or occlude the camera.  This can be a hindrance when the user wants to wait a significant amount of time before navigating back, when the user would like to use another app, or when the user needs both of their hands to perform some task.  ARKit does support a pause feature for a tracking session, however, when the session is resumed the phone's position will remain the same as before it was paused.  Given this limitation, we designed a pause feature that prompts the user to place their phone in a position and orientation (collectively called a ``pose'') that is easy to return to when the user wants to resume.  It is not crucial that the user be able to perfectly recreate this pose.  Specifically, the most important aspect of the pose to recreate is its yaw.  The reason for this is that the phone's accelerometer can easily determine the other two degrees of freedom of rotation (as these are not perpendicular to gravity) and deviations in the phone's position cause a fixed amount of error, whereas an error in the phone's yaw will be magnified the farther the user travels.  Holding the phone's screen flat against features such as walls or doors works well for this purpose.  
 
 \subsection{Novelty in Relationship to Previous Work}
 Our work on the design of \emph{Clew} represents the first research into automatically guiding a user back along a route, without the need for special modifications to the environment.
-\subsection{Usability Testing}
+
+\section{Usability Testing and Technology Evaluation}
+Previously in this document we discussed our initial design work that we undertook to inform the concept of Clew.  Here, we discuss the results of co-designs as well as data analysis experiments that informed the creation of specific aspects of Clew.  A number of our results have implications for researchers who would like to use AR technology to create assistive tech for people who are \BVI.
+
+\subsection{Longitudinal Testing with Local Co-Designers}
+
+
+\subsection{Technology Evaluation with College Students}
 
 \begin{table}
   \centering
@@ -283,66 +333,111 @@ Our work on the design of \emph{Clew} represents the first research into automat
 
 As a preliminary usability test, four college students used Clew to navigate six routes.  For each route, the participant was led by one of the authors --- mimicking the role of a sighted guide --- and then navigated back using Clew.  Participants were instructed to follow the guidance of the app, avoiding the use of their memory to correct for the app's errors.  In order to become accustomed to the app, the participants were sighted for the first two trial routes.  A trial was unsuccessful if the user couldn't follow the app's guidance (e.g., the app's estimation of a waypoint's location was inside a wall due to a failure of the ARKit's tracking algorithm). For successful trials (the user navigated to all waypoints), we recorded the distance from the user's final position to the ground truth position.  A summary of each of the routes and the results are shown in Table~\ref{tab:clewusability}.  These results demonstrate the robustness of Clew for navigating fairly complex routes, including routes that navigate stairs and/or through places with poor visual features.  The current study, while promising, is limited by its use of participants with occluded vision, rather than people who are \BVI.  While our co-designer who is blind tested Clew extensively, we are currently working on a full evaluation of Clew with multiple users who are \BVI.
 
-\subsection{Future Work for Clew}
+\subsection{Feedback from Global User Community}
+
+\todo{write this}
+
+\subsubsection{The Importance of Route Saving}
+
+
+\subsubsection{Supporting older iOS versions}
+\todo{write this}
+
+\subsubsection{Designing for Low-vision Users}
+\todo{write this}
+
+\subsection{Large-scale, Data-Driven User Study}
+
+\todo{write this}
+
+\subsubsection{Adoption and Usage of Clew}
+\todo{write this}
+
+\subsubsection{User Reactions}
+
+Not sure if this is good.
+\todo{write this maybe}
+
+\subsubsection{Device Pose During Navigation}
+\todo{write this}
+
+\subsubsection{Communicating Tracking Failures to the User}
+this is a good story linking data analysis to creating an app feature.
+
+\todo{write this}
+
+\subsubsection{Regression Analysis}
+
+\todo{write this}
+
+
+
+\section{Future Work for Clew}
 First, in order to make \emph{Clew} successful, we must continue to engage deeply with users to understand how they experience the current version of the app and improve it based on their feedback. Second, we are working to improve the ability of the app to detect and communicate tracking failures.  Specifically, when ARKit throws an error, it is straightforward to communicate this information to the user; however, if tracking drifts or becomes inaccurate without throwing an error, detection is much more difficult. Third, we are working to enable the sharing of previously traveled routes with other users.  This feature will work similarly to the pause feature in that the user will place their phone in a known starting pose (e.g., against a door as they enter a building), allowing their phone to register its current pose with the starting pose of a saved route.
 
-\section{App 2: ViewShare}
 
-Finding objects in unfamiliar environments can be challenging for people who are \BVI.  Inspired by previous work \cite{bigham2010vizwizlocateit} that utilizes a crowdsourcing model, whereby sighted online volunteers label an object of interest and sonic cues automatically guide a user to an object, we developed the \emph{ViewShare} app.
-
-\emph{ViewShare} provides high precision, automatic guidance to objects of interest.  To begin, the user, who is \BVI, launches the ViewShare app, starting an ARKit tracking session.  When the user wants to find an object, they announce its name, the phone recognizes their voice command, and a localization job is created.  This job is assigned to multiple sighted volunteers, who are sent push notifications on their smartphones.  On the \BVI user's device, every two seconds a snapshot of their environment is captured and added to the job.  Once a volunteer clicks on the push notification they are shown the snapshots (see Figure~\ref{fig:viewsharescreenshots}).  After the volunteer locates the object, they tap its position on the screen.  The object location in the image, represented as a 2D pixel coordinate, is relayed back to the \BVI user's app, which then attempts to convert this coordinate into a 3D position (see \emph{2D to 3D Transformation}).  If a 3D location can be determined, the user is provided with automatic guidance to the object in the form of computer-generated speech and haptic feedback.
-
-\subsection{Object Localization Feedback}
-ViewShare communicates location information using haptic and speech feedback.  Specifically, whenever the phone is oriented towards a located object the phone will vibrate subtly and the distance and name of the object will be announced.  To facilitate finding objects in 3D, the app provides two localization modes.  In \emph{2D feedback mode} the distance and orientation to an object are determined by projecting 3D spatial information into the floor plane.  This mode is useful for navigating to objects that are far away (since the height of the object is irrelevant until the user gets closer).  In \emph{3D feedback mode} distances and orientations to objects are determined using the unmodified 3D information.  This mode is useful for finding objects that are nearby.%  As an example, 3D mode is suited to finding a pen and 2D mode is suited to finding a door.
-
-\begin{figure}
-\begin{center}
-\includegraphics[height=3in]{Figures/viewshare_crowdworker}\hspace{.01\linewidth}
-\includegraphics[height=3in]{Figures/viewshare_user}
-\end{center}
-\caption{Left: ViewShare's interface for the crowdworker.  The crowdworker is instructed to locate the stapler in the images collected from the \BVI user's phone.  \textbf{Right:} the interface for the \BVI user showing the location of the stapler as indicated by the crowdworker (the visualization is useful primarily for users with low vision and as a debugging tool).\label{fig:viewsharescreenshots}}
-\end{figure}
-
-
-\subsection{2D to 3D Transformation}
-In order to map a 2D pixel coordinate to a 3D point in space, we utilize ARKit's plane fitting feature.  We first test whether the ray that connects the optical center of the camera with the location of the pixel coordinate of the located object intersects a tracked 3D plane (ARKit is capable of finding both vertical and horizontal planes in 3D).  If the ray intersects a plane, we mark the object as localized and compute its 3D position using standard geometric formulas.  If the ray \emph{does not} intersect a known plane (either because the object is not located on a plane or because the plane has not been found by ARKit) we return an error condition.  In this situation, the volunteer is instructed to click on the object from a second viewpoint.  Once the 2D pixel coordinate of the object is provided in two views, we use triangulation to compute its 3D position. % The optimal 3D triangulation of two rays with endpoints $x_1$ and $x_2$ and unit directions $u_1$ and $u_2$ is given by the following equation.
-%
-%\begin{align}
-%%c&= x_2 - x_1 \nonumber \\
-%%D &= x_1 + u_1 \frac{\left ( u_2 u_2^\top u_1  +  u_1   \right )^\top \left ( x_2 - x_1 \right) } {1 - \left ( u_1^\top u_2 \right)^2} \nonumber \\
-%%E &= x_2 + u_2 \frac{ \left ( u_1 u_2^\top u_1 - u_2 \right )^\top  \left ( x_2 - x_1 \right)  }{1 -  \left ( u_1^\top u_2 \right)^2} \nonumber \\
-%&\mbox{triangulate}(x_1, u_1, x_2, u_2) \nonumber = \\
-%&\frac{x_1 + x_2}{2}  + \frac{ u_1 u_1^\top u_2 u_2^\top  +  u_1 u_1^\top  + u_2 u_1^\top  u_2 u_1^\top - u_2 u_2^\top }{2 \left (1 -  \left ( u_1^\top u_2 \right)^2\right) } \left(  x_2 - x_1\right) \nonumber
-%\end{align}
-%
-
-%
-%        let A = ray1.origin
-%        let B = ray2.origin
-%        let a = ray1.direction
-%        let b = ray2.direction
-%        let c = B - A
-%        let D = A + a*(-simd_dot(a,b)*simd_dot(b,c)+simd_dot(a,c)*simd_dot(b,b))/(simd_dot(a,a)*simd_dot(b,b) - simd_dot(a,b)*simd_dot(a,b))
-%        let E = B + b*(simd_dot(a,b)*simd_dot(a,c)-simd_dot(b,c)*simd_dot(a,a))/(simd_dot(a,a)*simd_dot(b,b) - simd_dot(a,b)*simd_dot(a,b))
-%        let closestPoint = (D + E)/2
-
-\subsection{Novelty in Relationship to Previous Work}
-Our work on \emph{ViewShare} represents the first development of an app designed specifically for object finding that leverages the built-in motion sensing capabilities to both localize and provide guidance to objects in 3D.  Previous approaches either use a more brittle, 2D, approach to object localization, or require imprecise, mentally taxing, and high latency verbal communication to relay location information.
-
-\subsection{Future Work for ViewShare}
-While we designed this app primarily for finding objects, it can be utilized for other tasks.  One possibility is finding things that are not objects (e.g., the precise location of a bus stop or a doorway in outdoor settings where GPS is not sufficiently accurate).  A second possibility is automatically providing the location of important features in the environment (e.g., doors, windows, chairs) so that the user can make a mental map of the space around them.  In addition to these new use cases, another area of future exploration is quality control.  Aggregating judgments from multiple workers is an active area of research and these techniques can be utilized to filter inaccurate localizations from the crowd.
-
-\section{Discussion and Future Directions}
+\section{Summary of Considerations for Researchers who Want to Use AR for Assistive Technology}
 
 \subsection{Robustness of AR motion estimates for precise \OM} Our study demonstrates that for navigation routes of $\sim45m$ the motion estimates of ARKit are sufficiently accurate.  Additionally, for object finding within a room or on a tabletop we have found, anecdotally, that ARKit's performance is sufficient.
 
 As the complexity of the environment increases other sources of information (e.g., the detection of landmarks such as optical tags or Bluetooth beacons) could reduce tracking drift, providing spatial anchors.  Alternatively, crowdsourcing could correct drift in the phone's motion estimates (e.g., a crowdworker might identify a landmark at two points in time).
 
+
+%\section{App 2: ViewShare}
+%
+%Finding objects in unfamiliar environments can be challenging for people who are \BVI.  Inspired by previous work \cite{bigham2010vizwizlocateit} that utilizes a crowdsourcing model, whereby sighted online volunteers label an object of interest and sonic cues automatically guide a user to an object, we developed the \emph{ViewShare} app.
+%
+%\emph{ViewShare} provides high precision, automatic guidance to objects of interest.  To begin, the user, who is \BVI, launches the ViewShare app, starting an ARKit tracking session.  When the user wants to find an object, they announce its name, the phone recognizes their voice command, and a localization job is created.  This job is assigned to multiple sighted volunteers, who are sent push notifications on their smartphones.  On the \BVI user's device, every two seconds a snapshot of their environment is captured and added to the job.  Once a volunteer clicks on the push notification they are shown the snapshots (see Figure~\ref{fig:viewsharescreenshots}).  After the volunteer locates the object, they tap its position on the screen.  The object location in the image, represented as a 2D pixel coordinate, is relayed back to the \BVI user's app, which then attempts to convert this coordinate into a 3D position (see \emph{2D to 3D Transformation}).  If a 3D location can be determined, the user is provided with automatic guidance to the object in the form of computer-generated speech and haptic feedback.
+%
+%\subsection{Object Localization Feedback}
+%ViewShare communicates location information using haptic and speech feedback.  Specifically, whenever the phone is oriented towards a located object the phone will vibrate subtly and the distance and name of the object will be announced.  To facilitate finding objects in 3D, the app provides two localization modes.  In \emph{2D feedback mode} the distance and orientation to an object are determined by projecting 3D spatial information into the floor plane.  This mode is useful for navigating to objects that are far away (since the height of the object is irrelevant until the user gets closer).  In \emph{3D feedback mode} distances and orientations to objects are determined using the unmodified 3D information.  This mode is useful for finding objects that are nearby.%  As an example, 3D mode is suited to finding a pen and 2D mode is suited to finding a door.
+%
+%\begin{figure}
+%\begin{center}
+%\includegraphics[height=3in]{Figures/viewshare_crowdworker}\hspace{.01\linewidth}
+%\includegraphics[height=3in]{Figures/viewshare_user}
+%\end{center}
+%\caption{Left: ViewShare's interface for the crowdworker.  The crowdworker is instructed to locate the stapler in the images collected from the \BVI user's phone.  \textbf{Right:} the interface for the \BVI user showing the location of the stapler as indicated by the crowdworker (the visualization is useful primarily for users with low vision and as a debugging tool).\label{fig:viewsharescreenshots}}
+%\end{figure}
+%
+%
+%\subsection{2D to 3D Transformation}
+%In order to map a 2D pixel coordinate to a 3D point in space, we utilize ARKit's plane fitting feature.  We first test whether the ray that connects the optical center of the camera with the location of the pixel coordinate of the located object intersects a tracked 3D plane (ARKit is capable of finding both vertical and horizontal planes in 3D).  If the ray intersects a plane, we mark the object as localized and compute its 3D position using standard geometric formulas.  If the ray \emph{does not} intersect a known plane (either because the object is not located on a plane or because the plane has not been found by ARKit) we return an error condition.  In this situation, the volunteer is instructed to click on the object from a second viewpoint.  Once the 2D pixel coordinate of the object is provided in two views, we use triangulation to compute its 3D position. % The optimal 3D triangulation of two rays with endpoints $x_1$ and $x_2$ and unit directions $u_1$ and $u_2$ is given by the following equation.
+%%
+%%\begin{align}
+%%%c&= x_2 - x_1 \nonumber \\
+%%%D &= x_1 + u_1 \frac{\left ( u_2 u_2^\top u_1  +  u_1   \right )^\top \left ( x_2 - x_1 \right) } {1 - \left ( u_1^\top u_2 \right)^2} \nonumber \\
+%%%E &= x_2 + u_2 \frac{ \left ( u_1 u_2^\top u_1 - u_2 \right )^\top  \left ( x_2 - x_1 \right)  }{1 -  \left ( u_1^\top u_2 \right)^2} \nonumber \\
+%%&\mbox{triangulate}(x_1, u_1, x_2, u_2) \nonumber = \\
+%%&\frac{x_1 + x_2}{2}  + \frac{ u_1 u_1^\top u_2 u_2^\top  +  u_1 u_1^\top  + u_2 u_1^\top  u_2 u_1^\top - u_2 u_2^\top }{2 \left (1 -  \left ( u_1^\top u_2 \right)^2\right) } \left(  x_2 - x_1\right) \nonumber
+%%\end{align}
+%%
+%
+%%
+%%        let A = ray1.origin
+%%        let B = ray2.origin
+%%        let a = ray1.direction
+%%        let b = ray2.direction
+%%        let c = B - A
+%%        let D = A + a*(-simd_dot(a,b)*simd_dot(b,c)+simd_dot(a,c)*simd_dot(b,b))/(simd_dot(a,a)*simd_dot(b,b) - simd_dot(a,b)*simd_dot(a,b))
+%%        let E = B + b*(simd_dot(a,b)*simd_dot(a,c)-simd_dot(b,c)*simd_dot(a,a))/(simd_dot(a,a)*simd_dot(b,b) - simd_dot(a,b)*simd_dot(a,b))
+%%        let closestPoint = (D + E)/2
+%
+%\subsection{Novelty in Relationship to Previous Work}
+%Our work on \emph{ViewShare} represents the first development of an app designed specifically for object finding that leverages the built-in motion sensing capabilities to both localize and provide guidance to objects in 3D.  Previous approaches either use a more brittle, 2D, approach to object localization, or require imprecise, mentally taxing, and high latency verbal communication to relay location information.
+%
+%\subsection{Future Work for ViewShare}
+%While we designed this app primarily for finding objects, it can be utilized for other tasks.  One possibility is finding things that are not objects (e.g., the precise location of a bus stop or a doorway in outdoor settings where GPS is not sufficiently accurate).  A second possibility is automatically providing the location of important features in the environment (e.g., doors, windows, chairs) so that the user can make a mental map of the space around them.  In addition to these new use cases, another area of future exploration is quality control.  Aggregating judgments from multiple workers is an active area of research and these techniques can be utilized to filter inaccurate localizations from the crowd.
+%
+
 \subsection{Usability Concerns of \OM technology using AR}
 Since AR relies on VIO, which leverages optical tracking, apps based on AR require the camera to be unoccluded.  Currently, our apps assume that the user holds their phone in one hand while holding their cane in the other.  Future research should consider whether a method of handsfree operation can be developed that allows the user to continue to use their phone as an interface.  This could work by using an attachment (e.g., a neck lanyard) for holding the phone coupled with a speech-based user interface.  We are currently exploring this idea.
 
 For apps that require the user to hold the phone in their hand, recall that VIO algorithms work best when they are able to detect a large number of visual features at a range of depths.  This condition is best achieved when the user holds their phone upright with the camera facing approximately parallel to the ground.  We found that Joe had difficulty maintaining the phone in this configuration, perhaps due to the lack of visual feedback about the phone's orientation.  As a result, tracking performance suffered.  Developers of AR-powered assistive apps should consider adding feedback mechanisms to help the user to maintain their phone in an optimal orientation. 
-\balance{}
+
+\section{Future Work and Areas of Opportunity}
+
+\textbf{Finding objects in unfamiliar environments was difficult.} While Joe mentioned he had no difficulty in finding objects in spaces he has control to organize himself, he admitted that locating objects of interest in unfamiliar places or when others disturb his organization can be very challenging. Additionally, finding precise locations in outdoor environments (e.g., the correct part of a train platform or button to activate a crosswalk) is very difficult.  This set of insights helped support the creation of our app \emph{ViewShare} for object finding.
 
 \section{Conclusion}
 We have presented two smartphone apps that allow people who are \BVI to perform difficult \OM tasks with their smartphones.  Our apps are among the first mass-distributable apps for navigation and object finding in unmodified indoor environments.  While the results of our usability study are promising, more work, particularly in concert with users who are \BVI, is required to further refine the developed apps.
