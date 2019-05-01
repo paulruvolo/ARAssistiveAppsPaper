@@ -182,8 +182,6 @@ In the remainder of the paper we present related work on \OM assistive technolog
 
 A number of researchers have worked to overcome the limitations (e.g., less-than-ideal accuracy, lack of availability indoors) of GPS technology for assisting people who are \BVI with \OM.  Researchers have pursued roughly two approaches.  The first is to utilize crowdsourcing, whereby people who are \BVI connect over the internet with a sighted person for realtime assistance.  Examples of this approach include the VizWiz project \cite{bigham2010vizwiz}, BeMyEyes \cite{bemyeyesaccessworld}, and Aira \cite{aira} (both BeMyEyes and Aira support a video chat interface).  A second approach combines rudimentary motion estimates derived from inertial sensors (gyroscopes and accelerometers) with detection of fixed environmental infrastructure (e.g., Bluetooth beacons, Wifi access points).  For instance, \cite{ganz2015percept, ganz2011percept, ganz2014percept} developed a system for navigation using smartphone-detectable RFID tags.  Dias and her collaborators utilized WiFi fingerprinting and dead-reckoning for indoor navigation \cite{Dias__2014_7778}, and similar systems based on Bluetooth beacons have also been developed \cite{ishihara2017beacon, ahmetovic2016navcog}.  Others have explored the use of robots, with sophisticated sensors, to act as guides for people who are blind \cite{Nanavati:2018:CIN:3173386.3176976}.\todo{Generally need to expand on this given that we are not trying to hit the 5-page limit. More detail can be added as well as incorporating some of the references from my 2018 CAREER submission.}
 
-
-\subsection{Novelty in Relationship to Previous Work}
 Our work on the design of \emph{Clew} represents the first research into automatically guiding a user back along a route, without the need for special modifications to the environment.  Need to incorporate this \cite{flores2018easy} as it is similar to our work.  It's also important not to say that this is the only app that solves this task, that is not the only novelty of this work.  We are also contributing design insights / recommendations.
 
 %Another area of research is the development of solutions to help people who are \BVI find objects that were misplaced, moved by a third party, or whose locations were never known.  While the task of object finding doesn't fall under the umbrella of \OM, here we stretch the terminology to encompass it by noting that both \OM and object finding require a significant degree of spatial awareness.  As in the case of navigation, crowdsourcing approaches have shown promise for object finding \cite{bigham2010vizwizlocateit}.  Other approaches use automatic object detection and tracking to navigate to objects \cite{schauerte2012assistive, jafri2014computer, thakoor2014system}.%\todo{might need to explicitly contrast with our work, why is ours better, or just say that we will discuss this later}
@@ -270,14 +268,14 @@ ARKit tracks motion in a coordinate system whose origin coincides with the devic
 \begin{figure}
 \begin{center}
 \includegraphics[width=0.48\linewidth]{Figures/clew_screenshot_15}\hspace{.01\linewidth}
-\includegraphics[width=0.48\linewidth]{Figures/clew_screenshot_19}
+\includegraphics[width=0.48\linewidth]{Figures/clew_screenshot_6}
 \end{center}
-\caption{TODO: update the caption.  Two screenshots from our app ``Clew'' in navigation mode (where a user is retracing a previously traveled route).  The text for the left image says ``Continue straight and proceed downstairs'' and the text on the right says ``Continue straight for 3.2 feet.''\label{fig:clewshots}}
+\caption{Two screenshots from the app ``Clew.''  The text for the left image says ``Continue straight for 11 feet'' and the text on the right says ``Continue straight and proceed downstairs.''\label{fig:clewshots}}
 \end{figure}
 
 
 
-\subsubsection{Registration through Visual Alignmnent}
+\subsubsection{Registration through Visual Alignment}
 With the release of iOS 12.0, Apple's ARKit supports a re-localization feature whereby a visual representation of landmarks and their associated 3D positions can be stored to form a sparse map of an ARKit session.  Given a new ARKit session (e.g., the user has restarted the app), ARKit can load the previous 3D map and attempt to match the phone's current image features to the map.  If a match is found, the current position and orientation of the phone is updated to be relative to the coordinate system in the 3D map (thereby registering the two coordinate systems).  In order to support route saving and pausing, \emph{Clew} will save the current 3D map of the tracking session and attempt to use visual matching to relocalize the user when the user wants to navigate the route at a later time.
 
 The main limitation of visual alignment is that it doesn't always succeed.  This can occur for a multitude of reasons.  First, if the environment has changed significantly, for instance when lighting conditions have changed drastically, the visual environment may not look similar enough to the saved 3D map.  Alternatively, even if the environment is relatively static the user's viewing angle on the environment might be significantly different.  In particular, this is likely to happen when navigating routes in the reverse direction as visual features in the environment often appear very differently when viewed from the opposite direction (thus causing matching problems).
@@ -308,17 +306,14 @@ Previously in this document we discussed our initial design work that we underto
 We engaged with four local co-design partners to design and refine Clew.  We worked with each co-designer for five, two-hour sessions spaced a week apart.  Our co-designers brought useful insights along a range of dimensions.  Here we highlight several that are of particular relevance to using AR technology for people who are \BVI.
 
 \subsubsection{Insight 1: Maintaining Optimal Phone Orientation}
-For apps that require the user to hold the phone in their hand, recall that VIO algorithms work best when they are able to detect a large number of visual features at a range of depths.  This condition is best achieved when the user holds their phone upright with the camera facing approximately parallel to the ground.  We found that Joe had difficulty maintaining the phone in this configuration, perhaps due to the lack of visual feedback about the phone's orientation.  As a result, tracking performance suffered.  Developers of AR-powered assistive apps should consider adding feedback mechanisms to help the user to maintain their phone in an optimal orientation.  In our large-scale evaluation, we were able to demonstrate this quantitatively.
-
-\todo{I moved this recently.  Check for redundancy}In our \emph{technology evaluation and algorithm development} design phase (see Figure~\ref{fig:designprocess}), we discovered that the motion tracking estimates of ARKit are most accurate when the user holds their smartphone with the screen facing towards them and the optical axis of the camera facing roughly parallel to the ground.  This anecdotal finding is supported by the details of the underlying VIO algorithms, whose  geometrical calculations are best conditioned when visual features are tracked at a range of depths from the camera.  If the user's phone is pointed down at the floor or to the side at a wall, the phone will track features that primarily lie on a single plane, which will result in less reliable estimates of motion.
-
+VIO algorithms work best when they are able to detect a large number of visual features at a range of depths.  The reason for this is that many of these algorithms perform geometrical calculations which are best numerically conditioned when visual features are tracked at a range of depths from the camera.  This suggests that users should hold their phone upright with the camera facing approximately parallel to the ground.  If the user's phone is pointed down at the floor or to the side at a wall, the phone will track features that primarily lie on a single plane, which will result in less reliable estimates of motion.  We found that Joe had difficulty maintaining the phone in this configuration, perhaps due to the lack of visual feedback about the phone's orientation.  As a result, tracking performance suffered.  Developers of AR-powered assistive apps should consider adding feedback mechanisms to help the user to maintain their phone in an optimal orientation.  In our large-scale evaluation, we were able to demonstrate this quantitatively.
 
 \subsubsection{Insight 2: Alignment Between Body and Phone}
 Through interactions with a co-designer from the local area named Jim (pseudonym), we discovered that some users have a difficult time understanding the orientation of their phone relative to the orientation of their body.  Jim is congenitally blind, whereas the other three local co-designers, none of whom had this difficulty, lost their vision in their teens.  That the age at which sight was lost would have this effect was not wholly unexpected (see, e.g., \cite{long1997establishing, wiener2010foundations, schinazi2016spatial, thinus1997representation, williams2014just} for discussions of how spatial processing is affected).  We found that Jim could easily rotate his body in an effort to elicit haptic or auditory guidance from the app, which would indicate that he was facing the correct direction.
 
 In order to provide feedback relative to his body direction rather than the phone's direction, we developed a feature to constantly update an estimate of the phone's offset relative to the user's body.  The calculation of this offset can only be performed when the user is moving forward (moving laterally will throw this calculation off).  We found that this modification enabled Jim to use the app effectively.  Developers of AR-powered assistive apps should be cognizant of the differing abilities of users to sense spatial relationships between various parts of their body and their phone.
 
-\subsection{Technology Evaluation with College Students}
+\subsection{Technology Evaluation by College Students}
 
 \begin{table}
   \centering
@@ -339,47 +334,75 @@ In order to provide feedback relative to his body direction rather than the phon
             43.4m & yes & good & 75\% & 2.03m & 1.83m \\
     % \bottomrule
   \end{tabular}
-  \caption{Usability results for Clew.  The \emph{Visuals} column indicates the availability of trackable visual features, with ``mixed'' indicating that a route had segments with both good and poor quality visual features.}~\label{tab:clewusability}
+  \caption{Route navigation accuracy for Clew.  The \emph{Visuals} column indicates the availability of trackable visual features, with ``mixed'' indicating that a route had segments of both high and low availability.}~\label{tab:clewusability}
 \end{table}
 
-As a preliminary usability test, four college students used Clew to navigate six routes.  For each route, the participant was led by one of the authors --- mimicking the role of a sighted guide --- and then navigated back using Clew.  Participants were instructed to follow the guidance of the app, avoiding the use of their memory to correct for the app's errors.  In order to become accustomed to the app, the participants were sighted for the first two trial routes.  A trial was unsuccessful if the user couldn't follow the app's guidance (e.g., the app's estimation of a waypoint's location was inside a wall due to a failure of the ARKit's tracking algorithm). For successful trials (the user navigated to all waypoints), we recorded the distance from the user's final position to the ground truth position.  A summary of each of the routes and the results are shown in Table~\ref{tab:clewusability}.  These results demonstrate the robustness of Clew for navigating fairly complex routes, including routes that navigate stairs and/or through places with poor visual features.  The current study, while promising, is limited by its use of participants with occluded vision, rather than people who are \BVI.  While our co-designer who is blind tested Clew extensively, we are currently working on a full evaluation of Clew with multiple users who are \BVI.
+As a quantitative evaluation of the accuracy of the 3D position estimates used in Clew, four college students used Clew to navigate six routes.  For each route, the participant was led by one of the authors --- mimicking the role of a sighted guide --- and then navigated back using Clew.  Participants were instructed to follow the guidance of the app, avoiding the use of their memory to correct for the app's errors.  In order to become accustomed to the app, the participants were sighted for the first two trial routes.  A trial was unsuccessful if the user couldn't follow the app's guidance (e.g., the app's estimation of a waypoint's location was inside a wall due to a failure of the ARKit's tracking algorithm). For successful trials (the user navigated to all waypoints), we recorded the distance from the user's final position to the ground truth position.  A summary of each of the routes and the results are shown in Table~\ref{tab:clewusability}.  These results demonstrate that the underlying ARKit technology coupled with Clew's methods for providing positional feedback is robust enough for navigating fairly complex routes, including routes that navigate stairs and/or through places with poor visual features.  While these results are instructive, they in no way constitute a quantitative evaluation of how accurate Clew is for folks who are \BVI.  Instead of performing the experimental protocol as defined here with our co-designers who were \BVI, we instead focused on using the participatory design methods expressed earlier to maximize the utility of our limited time with our co-design partners.
 
 \subsection{Feedback from Global User Community}
-
-\todo{write this}
-
-\subsubsection{The Importance of Route Saving}
-
-
-\subsubsection{Supporting older iOS versions}
-\todo{write this}
-
-\subsubsection{Designing for Low-vision Users}
-\todo{write this}
-
-\subsection{Large-scale, Data-Driven User Study}\label{sec:largescalestudy}
-
-\todo{write this}
+We used interactions with local co-designers to inform our initial designs for Clew.  In order to achieve impact on a large-scale and to understand at a fine-grained, quantitative level the performance of our app, we released \emph{Clew} on the iOS app store in 156 countries.  In this section, we summarize the most important lessons we learned from the global community for others who would like to investigate AR technology for people who are \BVI.
 
 \subsubsection{Adoption and Usage of Clew}
-\todo{write this}
 
-\subsubsection{Device Pose During Navigation}
-\todo{Include the histogram of device verticality}
+We initially promoted the app on a limited basis through word-of-mouth to local members of the \BVI community.  Several members of the community discovered Clew and created several posts on the popular assistive technology portal \emph{Applevis}.
 
-\subsubsection{Communicating Tracking Failures to the User}
-this is a good story linking data analysis to creating an app feature.
-
-\todo{write this}
-
-\subsubsection{Regression Analysis}
-
-\todo{write this}
-We now have a result that shows that when the phone is not vertical, users are more likely to give the route a thumbs down.
+The publicity generated from the \emph{Applevis} posts generated a number of additional articles and blog entries.  As of the submission of this paper, Clew has been downloaded by almost 4,000 users from 50 different countries.  Clew is used by an average of 80 users per day.
 
 
+\subsubsection{Designing for Low-vision Users}
+One somewhat surprising thing we heard from the community is that Clew was useful to folks who are low-vision (rather than folks who are blind).  In our design of the initial version of Clew we had focused on making Clew  accessible via VoiceOver.  We didn't put much intentionality into the visual design of the app for folks with low vision.  When the app began to gain popularity we received feedback that the app's text was too small, the visual design of the waypoint markers (see Figure~TODO) was suboptimal, and that our speech guidance did not work if VoiceOver was turned off.  We addressed many of these concerns in subsequent updates, but more work remains to be done.
 
-\section{Future Work for Clew}
+\subsubsection{Supporting older iOS versions}
+
+In response to a beta version of the app that removed support for an older iOS version, one user expressed a desire to support older iOS versions.  We were puzzled by this request as we assumed that all users would have upgraded to the most recent iOS (which was 12.0).  The user explained that he didn't update his phone until the new major revision had been out for a significant amount of time.  He went on to say that the minor bugs that often accompany major releases that sighted users can workaround can be showstoppers for folks that rely on the accessibility features of iOS.  As a result, we reversed course and maintained support for older iOS versions.
+
+\subsubsection{Importance of Internationalization and Localization}
+
+The majority of the users of Clew are from outside of the U.S.  The fact that Clew was released, and is still available only in English, is a major limiting factor in the adoption and successful usage of Clew.  We have received many requests for Clew to be localized into other languages as well as a number of offers to perform translation work pro bono.  The fact that language barriers created a lack of accessibility for our app designed to promote indoor accessibility was an irony we had certainly not thought about ahead of time.
+
+\subsection{Large-Scale User Study}\label{sec:largescalestudy}
+After the user completes the navigation of a route or cancels navigation, they are prompted to rate the quality of the app's navigational guidance as either ``thumbs up'' or ``thumbs down.''   While the exact meaning of these ratings is subjective, it does provide us with a quantitative lens to understand the factors that influence the quality of the user's experience.  Importantly, users could opt out of contributing their route ratings and log data, so we only have access to data that represents a subset of the overall usage of the app.
+
+In order to investigate the association between various factors and the user's rating of a navigation experience as either being positive or negative we performed a logistic regression analysis with route rating as the dependent variable and the following independent variables.
+\begin{itemize}
+\item a binary feature that indicates whether or not the route was resumed (versus newly recorded)
+\item a binary feature that indicates whether the route was in the same direction of the recording or in the reverse direction
+\item a categorical feature that indicated which of five quantile bins the length of the route fell within (0-20th percentile, 20th-40th percentile, 40th-60th percentile, 60th-80th percentile, 80th-100th percentile).
+\item a categorical feature that indicated the number of motion racking errors reported by ARKit during the route navigation (0, 1, 2, 3, or more than 4).
+\item a categorical feature that indicated the angle of the user's device relative to the ground plane.  The feature indicated which of five quantile bins the device angle fell within (0-20th percentile, 20th-40th percentile, 40th-60th percentile, 60th-80th percentile, 80th-100th percentile).
+\end{itemize}
+
+In total our analysis covered 5,789 routes.  A total of 490 of these routes were collected after we released support for route saving and reloading (in the first three updates of Clew, route pausing was supported but not route reloading).
+
+\subsubsection{Importance of Device Pose During Navigation}
+\begin{figure}
+\includegraphics[width=\linewidth]{figures/phoneangle}
+\caption{The relationship between log odds of the user rating a route navigation experience as ``thumbs up'' and the median angle of the phone relative to horizontal (i.e., a plane perpendicular to gravity).  Superimposed on the bars are the 95\% confidence intervals.\label{fig:devicepose}}
+\end{figure}
+
+As mentioned previously, we knew from both the underlying mathematics of the algorithms and from our anecdotal observations that VIO performed sub-optimally when the phone was not held vertically.  Further, we had seen that some of our co-designers had difficulty keeping the phone vertical throughout the route. The regression analysis showed that, consistent with these observations users were less likely to rate their route navigation experiences as positive when the phone was held at a flatter angle (see Figure~\ref{fig:devicepose}).  This finding further underscores the utility of providing features to help the user maintain their phone's vertical orientation when using AR applications.
+
+\subsubsection{Importance of Minimizing Tracking Failures}
+\begin{figure}
+\includegraphics[width=\linewidth]{figures/trackingerrors}
+\caption{The relationship between log odds of the user rating a route navigation experience as ``thumbs up'' and the number of tracking errors encountered during route navigation.  Superimposed on the bars are the 95\% confidence intervals.\label{fig:trackingerrors}}
+\end{figure}
+
+ARKit reports two error conditions related to motion tracking.  One error condition is ``insufficient visual features,`` which occurs when the camera is not capturing images with sufficient texture to allow for accurate feature tracking.  The second error condition is ``excessive motion,'' which occurs when the phone is moving too quickly.  Our analysis found that there was a steep drop-off in the likelihood of the user rating the navigation experience positively as the number of tracking errors increased (see Figure~\ref{fig:trackingerrors}).  This finding prompted us to change the behavior of the app to announce tracking errors to the user in hopes that they would help the user to avoid them.
+
+\subsubsection{Route Characteristics and Average Rating}
+In addition to the quality of the tracking of the user's phone during navigation, we also found that various characteristics of the route itself were statistically significantly related to the likelihood of the user providing a positive rating to their navigation experience.
+
+Routes that were resumed (versus newly recorded) had a lower log-likelihood ratio of being rated positively.  This finding is consistent with the inaccuracies that can be introduced by Clew's route alignment procedure.  Routes that were resumed but navigated in the forward direction had a higher likelihood of being rated positively, but the result was not statistically significant. This is likely related to the higher likelihood of visual alignment succeeding when navigating in the forward direction where visual features are more likely to be similar to those seen during route recording.
+
+\begin{figure}
+\includegraphics[width=\linewidth]{figures/routelength}
+\caption{The relationship between log odds of the user rating a route navigation experience as ``thumbs up'' and the length of the route.  Superimposed on the bars are the 95\% confidence intervals.\label{fig:routelength}}
+\end{figure}
+
+The relationship between route length and likelihood of a positive rating was unexpected (see Figure~\ref{fig:routelength}).  The figure shows that routes that are rated positive peak at around XXm. We had expected to find that likelihood of positive rating would monotonically decrease as route length increased.  We think this is due to the fact that users are forced to rate every route and have no way to cancel a route navigation without issuing a rating.  The lower ratings for shorter routes could be due to users wanting to cancel route recording and being forced to issue a rating of a route they didn't intend to record.\todo{does this make any sense?!?}
+
+\section{Future Work}
 First, in order to make \emph{Clew} successful, we must continue to engage deeply with users to understand how they experience the current version of the app and improve it based on their feedback. Second, we are working to improve the ability of the app to detect and communicate tracking failures.  Specifically, when ARKit throws an error, it is straightforward to communicate this information to the user; however, if tracking drifts or becomes inaccurate without throwing an error, detection is much more difficult. Third, we are working to enable the sharing of previously traveled routes with other users.  This feature will work similarly to the pause feature in that the user will place their phone in a known starting pose (e.g., against a door as they enter a building), allowing their phone to register its current pose with the starting pose of a saved route.
 
 
