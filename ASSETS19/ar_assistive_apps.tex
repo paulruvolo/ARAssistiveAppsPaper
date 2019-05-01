@@ -372,7 +372,7 @@ In order to investigate the association between various factors and the user's r
 \item a categorical feature that indicated the angle of the user's device relative to the ground plane.  The feature indicated which of five quantile bins the device angle fell within (0-20th percentile, 20th-40th percentile, 40th-60th percentile, 60th-80th percentile, 80th-100th percentile).
 \end{itemize}
 
-In total our analysis covered 5,789 routes.  A total of 490 of these routes were collected after we released support for route saving and reloading (in the first three updates of Clew, route pausing was supported but not route reloading).
+In total our analysis covered 5,789 routes.  A total of 490 of these routes were collected after we released support for route saving and reloading (in the first three updates of Clew, route pausing was supported but not route reloading).  The baseline ``thumbs up'' rating in the dataset 68\%. 
 
 \subsubsection{Importance of Device Pose During Navigation}
 \begin{figure}
@@ -403,9 +403,7 @@ Routes that were resumed (versus newly recorded) had a lower log-likelihood rati
 The relationship between route length and likelihood of a positive rating was unexpected (see Figure~\ref{fig:routelength}).  The figure shows that routes that are rated positive peak at around XXm. We had expected to find that likelihood of positive rating would monotonically decrease as route length increased.  We think this is due to the fact that users are forced to rate every route and have no way to cancel a route navigation without issuing a rating.  The lower ratings for shorter routes could be due to users wanting to cancel route recording and being forced to issue a rating of a route they didn't intend to record.\todo{does this make any sense?!?}
 
 \section{Future Work}
-First, in order to make \emph{Clew} successful, we must continue to engage deeply with users to understand how they experience the current version of the app and improve it based on their feedback. Second, we are working to improve the ability of the app to detect and communicate tracking failures.  Specifically, when ARKit throws an error, it is straightforward to communicate this information to the user; however, if tracking drifts or becomes inaccurate without throwing an error, detection is much more difficult. Third, we are working to enable the sharing of previously traveled routes with other users.  This feature will work similarly to the pause feature in that the user will place their phone in a known starting pose (e.g., against a door as they enter a building), allowing their phone to register its current pose with the starting pose of a saved route.
-
-
+\todo{We already did everything we said in the previous submission!  What is worth including here, or do we just delete this section?}
 \section{Summary of Considerations for Researchers who Want to Use AR for Assistive Technology}
 
 \subsection{Robustness of AR motion estimates for precise \OM} Our study demonstrates that for navigation routes of $\sim45m$ the motion estimates of ARKit are sufficiently accurate.  Additionally, for object finding within a room or on a tabletop we have found, anecdotally, that ARKit's performance is sufficient.
@@ -465,11 +463,11 @@ Since AR relies on VIO, which leverages optical tracking, apps based on AR requi
 
 
 \section{Future Work and Areas of Opportunity}
-
+\todo{this was moved from another part of the paper last year... Need to integrate it into the flow of the paper}
 \textbf{Finding objects in unfamiliar environments was difficult.} While Joe mentioned he had no difficulty in finding objects in spaces he has control to organize himself, he admitted that locating objects of interest in unfamiliar places or when others disturb his organization can be very challenging. Additionally, finding precise locations in outdoor environments (e.g., the correct part of a train platform or button to activate a crosswalk) is very difficult.  This set of insights helped support the creation of our app \emph{ViewShare} for object finding.
 
 \section{Conclusion}
-We have presented two smartphone apps that allow people who are \BVI to perform difficult \OM tasks with their smartphones.  Our apps are among the first mass-distributable apps for navigation and object finding in unmodified indoor environments.  While the results of our usability study are promising, more work, particularly in concert with users who are \BVI, is required to further refine the developed apps.
+\todo{this is from last year}We have presented two smartphone apps that allow people who are \BVI to perform difficult \OM tasks with their smartphones.  Our apps are among the first mass-distributable apps for navigation and object finding in unmodified indoor environments.  While the results of our usability study are promising, more work, particularly in concert with users who are \BVI, is required to further refine the developed apps.
 
 Additionally, we have outlined several promising areas of opportunity for the development of AR apps for \OM and provided a discussion of the usability factors of this technology.  Through the development of new algorithms, co-design with users, and the improvement of AR technology itself, researchers can hopefully continue to leverage AR to create impactful smartphone technology for people who are \BVI.  
 %
