@@ -390,12 +390,13 @@ ARKit reports two error conditions related to motion tracking.  One error condit
 \subsubsection{Route Characteristics and Average Rating}
 In addition to the quality of the tracking of the user's phone during navigation, we also found that various characteristics of the route itself were related to the likelihood of the user providing a positive rating to their navigation experience.
 
-Routes that were resumed (versus newly recorded) had a lower log-likelihood ratio of being rated positively ($p < 0.002$).  This finding is consistent with the inaccuracies that can be introduced by Clew's route alignment procedure.  Routes that were resumed but navigated in the forward direction had a higher likelihood of being rated positively, but the result was not statistically significant ($p = 0.2$). If this finding holds, this is likely related to the higher success rate of visual alignment when navigating in the forward direction where visual features are more similar to those seen during route recording.
-
 \begin{figure}
 \includegraphics[width=\linewidth]{figures/routelength}
 \caption{The relationship between log odds of the user rating a navigation experience as ``thumbs up'' and the length of the route.  Also shown are the 95\% confidence intervals.\label{fig:routelength}}
 \end{figure}
+
+Routes that were resumed (versus newly recorded) had a lower log-likelihood ratio of being rated positively ($p < 0.002$).  This finding is consistent with the inaccuracies that can be introduced by Clew's route alignment procedure.  Routes that were resumed but navigated in the forward direction had a higher likelihood of being rated positively, but the result was not statistically significant ($p = 0.2$). If this finding holds, this is likely related to the higher success rate of visual alignment when navigating in the forward direction where visual features are more similar to those seen during route recording.
+
 
 The relationship between route length and likelihood of a positive rating had an unexpected form (see Figure~\ref{fig:routelength}).  The figure shows that the navigation experiences that are most likely to be rated positively are for routes that are between 9 and 15 meters in length. We had expected that the likelihood of a positive rating would monotonically decrease with route length.  We think this is due to the fact that users are forced to rate every route and have no way to cancel navigation without issuing a rating.  The lower ratings for shorter routes could be due to users wanting to cancel route recording and being forced to issue a rating of a route they didn't intend to record.
 

@@ -1,0 +1,20 @@
+figure 1:
+A flow diagram indicating the major steps of our design process.  The first box says "User Interviews and Identification of Areas of Opportunity".  This box is connected via an arrow to a box that says "Technology evaluation and algorithm development".  This box is connected via an arrow to a box that says "Rapid prototyping and co-design with local users".  This box is connected via an arrow to a box that says "App Release".  This box connects to two other boxes via arrows.  The first reads "Incorporation of feedback from global community".  The second reads "Analysis of usage data from global community".  Each of these two boxes converges via arrows to a box that reads "App Improvements".  This box feeds back to the box that reads "Rapid prototyping and co-design with local users".
+
+figure 2:
+A topdown view of a navigation route recorded with Clew.
+
+figure 3:
+A flow diagram indicating the procedure for saving and loading a route.  The save route flow diagram starts with a box that says "Create landmark at the start of route".  This box connects to a box that says "Record phone pose every 0.3 seconds".  This box connects to a box that says "Create second landmark at the end of the route".  This box connects to "saves breadcrumbs, landmarks and 3D map".  This box connects to "archives the route data".  The flow diagram for loading the route starts with a box that says "unarchives the route data".  This connects to a box that says "Aligns to either start or end landmark".  This connects to a box that says "transforms recorded phone poses based on new coordinate system".  This connects to a box that says "calculates waypoints of the route".  This connects to a box that says "provides guidance along route".  Thsi connects to a box that says "ends path".  A box that says "(Optional) route is matched visually" also connects to the box that says "provides guidance along route".
+
+figure 4:
+Images of the Clew app being used for path navigation.  The left image shows a navigation waypoint that appears to be located on a door in an indoor environment.  The text reads "Continue straight for 11 feet".  The right image shows a waypoint that appears to be located at the bottom of a staircase.  The text reads "Continue straight and proceed downstairs".
+
+figure 5:
+The raw data for this graph is: greater than 79 degrees 0 (95% CI, 0 to 0).  79-72 degrees -0.11 (95% CI, -0.30 to 0.08).  72-65 degrees -0.23 (95% CI, -0.42 to -0.04).  65-48 degrees -0.37 (95% CI, -0.56 to -0.19).  Less than 48 degrees -0.30 (95% CI, -0.48 to -0.11).
+
+figure 6:
+The raw data for this graph is: 0 tracking errors 0 (95% CI, 0 to 0).  1 tracking error -0.29 (95% CI, -0.50 to -0.07).  2 tracking errors -0.26 (95% CI, -0.53 to 0.01). 3 tracking errors -0.57 (95% CI, -0.87 to -0.27). 4 or greater tracking errors -0.91 (95% CI, -1.05 to -0.76).
+
+figure 7:
+The raw data for this graph is: less than 2.5 meters 0 (95% CI, 0 to 0). 2.5 to 9 meters 0.56 (95% CI, 0.37 to 0.75).  9 to 15 meters 0.73 (95% CI, 0.53 to 0.92).  15 to 33 meters 0.39 (95% CI, 0.2 to 0.58).  Greater than 33 meters -0.35 (95% CI, -0.54 to -0.16).
