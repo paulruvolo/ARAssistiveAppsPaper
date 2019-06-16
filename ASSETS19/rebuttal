@@ -1,6 +1,3 @@
-Limited to 600 words across all 3 boxes (all reviewers get all of the comments)
-
-
 We thank all three reviewers for this tremendously useful feedback. If our paper is accepted, this feedback will improve the final version significantly.
 
 Response to reviewer 1:
@@ -9,25 +6,25 @@ We will add a richer discussion of the co-designers to allow the reader to more 
 
 We will add a full presentation of the logistic regression results.
 
-We will add a discussion that more fully describes the strengths and limiations of our approach.
+We will add a discussion that more fully describes the strengths and limitations of our approach.
 
-Repsonse to reviewer 2:
+Response to reviewer 2:
 
-In our own internal testing we have not seen the problem of false matches to patterned floors.  It is likely that ARKit will not return a match unless there is a close match detected and there are no other matches that are close runner-ups (this sort of test is widely used for loop closure detection).  Unfortunately, given the closed-source nature of ARKit, it is impossible to drectly ascertain if this is the case.  More experimentation in a follow-up work could help to determine the likelihood of this failure mode. It is also worth mentioning that even if such a false match were to occur, ARKit is constantly looking for matches to correct the alignment to the saved map. Subsequent matches could serve to correct for any initial error.
+In our own internal testing we have not seen the problem of false matches to patterned floors.  It is likely that ARKit will not return a match unless there is a close match detected and there are no other matches that are close runner-ups (this sort of test is widely used for loop closure detection).  Unfortunately, given the closed-source nature of ARKit, it is impossible to directly ascertain if this is the case.  More experimentation in a follow-up work could help to determine the likelihood of this failure mode. It is also worth mentioning that even if such a false match were to occur, ARKit is constantly looking for matches to correct the alignment to the saved map. Subsequent matches could serve to correct for any initial error.
 
 
 Your advice regarding better presenting the graph with the overlapping confidence intervals is very important.  We will act upon it.
 
 You are correct that the phone is pointing down for landmark creation and forward when navigating along the route.
 
-Repsonse to reviewer 3:
+Response to reviewer 3:
 
-We agree that the focus should be on the specific insights of deploying VIO technology at largescale for people who are visually impaired.  We will make it more clear that the more generic considerations (e.g., internationalization and localization) are important when designing for users who are blind primarily because blindness is a relatively low-incidence disability (thus, having feedback from a global userbase might be essential to having enough diverse perspectives to ensure a good design).
+We agree that the focus should be on the specific insights of deploying VIO technology at large scale for people who are visually impaired.  We will make it more clear that the more generic considerations (e.g., internationalization and localization) are important when designing for users who are blind primarily because blindness is a relatively low-incidence disability (thus, having feedback from a global user base might be essential to having enough diverse perspectives to ensure a good design).
 
-We appreciate your discussion of some of the limitations of our current work.  While it is true that the effect of tracking errors and route length on route ratings is obvious before deployment, we believe that there is value in having a quanitative model to predict the effect of these factors on navigation performance.  Additionally, the fact that the angle of the phone significantly changes the likelihood of a positive rating is also of primary importance and, arguably, more suprising.  Importantly, the fact that our app is deployed widely is what allowed us to create such a model.
+We appreciate your discussion of some of the limitations of our current work.  While it is true that the effect of tracking errors and route length on route ratings is obvious before deployment, we believe that there is value in having a quantitative model to predict the effect of these factors on navigation performance.  Additionally, the fact that the angle of the phone significantly changes the likelihood of a positive rating is also of primary importance and, arguably, more surprising.  Importantly, the fact that our app is deployed widely is what allowed us to create such a model.
 
-It is a good suggestion to do more testing of the form in Table 1 with users who are blind. In this work, users with typical vision did the experiment described in Table 1 as a means of establishging a baseline performance level of ARKit motion estimation.  We do not view this experiment as representative of what users who are blind would achieve with the system.  To inform the characterization of the real world experiences of users who are blind, we instead focused on our longitudinal co-design sessions as well as feedback and data from the deployed app.
+It is a good suggestion to do more testing of the form in Table 1 with users who are blind. In this work, users with typical vision did the experiment described in Table 1 as a means of establishing a baseline performance level of ARKit motion estimation.  We do not view this experiment as representative of what users who are blind would achieve with the system.  To inform the characterization of the real world experiences of users who are blind, we instead focused on our longitudinal co-design sessions as well as feedback and data from the deployed app.
 
 ----
 
-Thank you again to the reviewers for all of your helpful suggestions..
+Thank you again to the reviewers for all of your helpful suggestions.
