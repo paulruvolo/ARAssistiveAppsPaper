@@ -228,8 +228,23 @@ Apple's ARKit \cite{arkit}, released in 2017, and Google's ARCore \cite{arcore},
 %Although quite specific and certainly at the implementation detail level, a challenge presented when developing assistive apps for ARKit is that the ARSCNView class provided by Apple does not allow for the presentation of subviews.  This limitation makes it particular hard to achieve optimal integration with Apple's VoiceOver.  In particular, it is very difficult to make an app that consistently announces the identity of activated buttons, while also properly announcing new controls that appears on the screen.
 
 \section{Design Process Overview}
+\begin{table}
+  \centering
+  \begin{tabular}{c c c c}
+    % \toprule
+    {\small \textit{Pseudonym}}
+            & {\small \textit{Gender}} & {\small \textit{Proficiency with smartphones}} & {\small \textit{Means of \OM}} \\
+    \midrule
+    Joe  & male  & medium & dog \\
+    Carmen  &  male & high & cane \\
+   Karen  & female & high & cane\\
+    George  & male & low & cane
+    % \bottomrule
+  \end{tabular}
+  \caption{Some of the attributes of the co-designers who helped create the Clew app.  Each co-designer visited Olin five times for roughly three hours per session.\label{tab:codesigners}}
+\end{table}
 
-We employed a user-centered design process that involves people who are \BVI in all phases (see Figure~\ref{fig:designprocess}).  In the initial phase, we focused on in-person interactions with local members of the \BVI community and members of the research team who are \BVI to identify areas of opportunity for improving access to physical spaces (see \emph{\nameref{sec:areasofopportunity}}).  Based on these interactions, we developed concepts for \OM apps.  These app concepts fed into an intensive co-design process where we created system designs, selected and developed algorithms, and ultimately produced prototype apps, which our co-designers engaged with (see \emph{\nameref{sec:areasofopportunity}}).  We iterated this design cycle based on feedback from our co-designers.
+We employed a user-centered design process that involves people who are \BVI in all phases (see Figure~\ref{fig:designprocess}).  In the initial phase, we focused on in-person interactions with local members of the \BVI community and members of the research team who are \BVI to identify areas of opportunity for improving access to physical spaces (see \emph{\nameref{sec:areasofopportunity}}).  Based on these interactions, we developed concepts for \OM apps.  These app concepts fed into an intensive co-design process where we created system designs, selected and developed algorithms, and ultimately produced prototype apps, which our co-designers engaged with (see \emph{\nameref{sec:areasofopportunity}}).  Some basic attributesof our co-designers are presented in Table~\ref{tab:codesigners}.  We iterated this design cycle based on feedback from these co-designers.
 
 Once we had an app that was polished as well as useful to the \BVI community, we released the app on the iOS App Store.  The release of the app generated feedback in two forms.  First, users from all over the world gave us their impressions of the app and how they would want to see it improved.  Second, users who opted-in to sharing usage data, provided a dataset to understand, in a quantitative manner, how the app was being utilized (see \emph{\nameref{sec:largescalestudy}}).
 
@@ -389,6 +404,29 @@ In order to investigate the association between various factors and the user's r
 
 In total, our analysis covered 5,789 routes.  A total of 490 of these routes were collected after we released support for route saving and reloading (in the first few versions of Clew, route pausing was supported but not route reloading).  The baseline ``thumbs up'' rating in the dataset was 68\%. 
 
+\begin{table}
+  \centering
+\begin{tabular}{c  c c c c c c}
+{\small \textit{feature}}	& {\small \textit{coef}}  & {\small \textit{p-value}} & {\small \textit{[0.025}} & 	{\small \textit{0.975]}} \\
+intercept	& 1.3731&	0.000 &	0.850 &	1.897 \\
+%C(navigationVerticalityMedianQCut)(-0.981, -0.954] &	-0.1133	& 0.096 & 	-1.181&	0.238 &	-0.301& 0.075 \\
+%C(navigationVerticalityMedianQCut)(-0.954, -0.908] &	-0.2319	& 0.095 &	-2.435	&0.015 &	-0.419	& -0.045
+%C(navigationVerticalityMedianQCut)[T.Interval(-0.908, -0.748, closed='right')]	-0.3733	0.095	-3.945	0.000	-0.559	-0.188
+%C(navigationVerticalityMedianQCut)[T.Interval(-0.748, 0.993, closed='right')]	-0.2953	0.095	-3.093	0.002	-0.482	-0.108
+%C(numTrackingErrorsLimited)[T.1.0]	-0.2849	0.109	-2.614	0.009	-0.499	-0.071
+%C(numTrackingErrorsLimited)[T.2.0]	-0.2608	0.137	-1.901	0.057	-0.530	0.008
+%C(numTrackingErrorsLimited)[T.3.0]	-0.5718	0.153	-3.747	0.000	-0.871	-0.273
+%C(numTrackingErrorsLimited)[T.4.0]	-0.9092	0.074	-12.280	0.000	-1.054	-0.764
+%C(routeDistanceQCut)[T.Interval(2.634, 9.37, closed='right')]	0.5567	0.096	5.786	0.000	0.368	0.745
+%C(routeDistanceQCut)[T.Interval(9.37, 15.486, closed='right')]	0.7283	0.100	7.302	0.000	0.533	0.924
+%C(routeDistanceQCut)[T.Interval(15.486, 32.801, closed='right')]	0.3905	0.097	4.022	0.000	0.200	0.581
+%C(routeDistanceQCut)[T.Interval(32.801, 453788.499, closed='right')]	-0.3496	0.096	-3.656	0.000	-0.537	-0.162
+is resumed route	& -0.5189	& 0.002 & 	-0.840 & 	-0.198 \\
+is end to start	& -0.3331	& 0.182	& -0.822	& 0.156
+\end{tabular}
+  \caption{TODO.\label{tab:binaryfeatures}}
+\end{table}
+
 \subsubsection{Importance of Device Pose During Navigation}
 
 
@@ -479,6 +517,13 @@ Based on our co-design process, technology evaluation, and user study, we summar
 %While we designed this app primarily for finding objects, it can be utilized for other tasks.  One possibility is finding things that are not objects (e.g., the precise location of a bus stop or a doorway in outdoor settings where GPS is not sufficiently accurate).  A second possibility is automatically providing the location of important features in the environment (e.g., doors, windows, chairs) so that the user can make a mental map of the space around them.  In addition to these new use cases, another area of future exploration is quality control.  Aggregating judgments from multiple workers is an active area of research and these techniques can be utilized to filter inaccurate localizations from the crowd.
 %
 
+\section{Strengths and Limitations of Our Approach}
+\begin{itemize}
+\item Works in Unmodified environments
+\item Accurate, low latency feedback
+\item Cons: can be difficult to use (hands are occupied, users may have inaccurate mental models of the technology leading to suboptimal use or unrealistic expectations)
+\item Con: drifts over time.
+\end{itemize}
 
 \section{Future Work and Areas of Opportunity}
 While we have provided initial steps towards understanding and realizing the potential of AR technology for \OM, we have identified a number of broad future directions that are outside the scope of our current work.
@@ -499,8 +544,7 @@ We have presented our smartphone app, Clew, which allows people who are \BVI to 
 Additionally, we have outlined areas of opportunity for the development of AR apps for \OM and provided a discussion of guidelines for successfully using this technology.  Through the development of new algorithms, co-design with users, and the improvement of AR technology itself, researchers will hopefully succeed in leveraging AR to create impactful smartphone technology for people who are \BVI.  
 %
 \section{Acknowledgments}
-Removed for anonymous review.
-
+We would like to acknowledge The Peabody Foundation of Boston, MA for funding this work.  Additionally, Simran Malhi, Dieter Brehm, Megan Ku, Louise Nielsen, and Lauren Gulland contributed to this work.
 % BALANCE COLUMNS
 \balance{}
 
